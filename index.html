@@ -66,31 +66,40 @@
     }
 
     /* =====================================================
-       SEKMELER (TABS)
+       SEKMELER (TABS - MOBİL YATAY KAYDIRMALI)
        ===================================================== */
     
     .tabs-container {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       margin-bottom: 12px;
       background: rgba(20, 20, 22, 0.94);
       padding: 4px;
       border: 1px solid #29292d;
       border-radius: 14px;
       flex-shrink: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
     }
 
     .tab-btn {
-      flex: 1;
-      padding: 10px 8px;
+      flex: 1 0 auto;
+      padding: 8px 10px;
       background: transparent;
       border: none;
       color: #77777f;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
+      text-align: center;
+      white-space: nowrap;
     }
 
     .tab-btn.active {
@@ -201,7 +210,7 @@
     .question-text-math {
       color: #f3f3f4;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: clamp(26px, 6vw, 42px);
+      font-size: clamp(24px, 5.8vw, 40px);
       font-weight: 600;
       letter-spacing: 1px;
       text-align: center;
@@ -211,9 +220,9 @@
     .question-text-story {
       color: #f3f3f4;
       font-family: Inter, sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 1.4;
+      line-height: 1.45;
       text-align: center;
     }
 
@@ -434,12 +443,13 @@
 
     /* MOBİL ÖZEL DÜZENLEME */
     @media (max-width: 600px) {
-      .header { display: none; } /* Ekran alanından kazanmak için mobil üst başlığı gizler */
-      .page { padding: 8px; }
+      .header { display: none; }
+      .page { padding: 6px; }
       .card { padding: 12px; border-radius: 14px; }
       .question-box { min-height: 85px; padding: 8px; }
-      .question-text-story { font-size: 14px; }
+      .question-text-story { font-size: 13.5px; }
       .timer-area { margin: 6px 0; }
+      .tab-btn { font-size: 10.5px; padding: 6px 8px; }
     }
   </style>
 </head>
@@ -448,18 +458,20 @@
   <main class="page">
     <section class="app">
 
-      <!-- SEKMELER -->
+      <!-- SEKMELER (YATAY KAYDIRILABİLİR) -->
       <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab(event, 'tamSayilar')">Tam Sayılar</button>
-        <button class="tab-btn" onclick="switchTab(event, 'hikayeli')">Hikayeli Problemler</button>
+        <button class="tab-btn" onclick="switchTab(event, 'carpmaBolme')">Çarpma / Bölme</button>
+        <button class="tab-btn" onclick="switchTab(event, 'hikayeli')">Hikayeli (+−)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'hikayeliCB')">Hikayeli (×÷)</button>
       </div>
 
       <!-- =====================================================
-           MODÜL 1: TAM SAYILAR
+           MODÜL 1: TAM SAYILAR (TOPLAMA - ÇIKARMA)
            ===================================================== -->
       <div id="view-tamSayilar" class="view-section active">
         <header class="header">
-          <p class="eyebrow">Tam Sayılar Hız Antrenmanı</p>
+          <p class="eyebrow">Toplama ve Çıkarma Antrenmanı</p>
         </header>
 
         <div class="card">
@@ -493,11 +505,49 @@
 
 
       <!-- =====================================================
-           MODÜL 2: HİKAYELİ PROBLEMLER
+           MODÜL 2: ÇARPMA VE BÖLME (24 SORU)
+           ===================================================== -->
+      <div id="view-carpmaBolme" class="view-section">
+        <header class="header">
+          <p class="eyebrow">Çarpma ve Bölme Antrenmanı</p>
+        </header>
+
+        <div class="card">
+          <div class="topbar">
+            <span id="cb_progressText" class="progressText">Soru 1 / 24</span>
+            <button id="cb_resetBtn" class="resetBtn" title="Seti Baştan Başlat">↻ Sıfırla</button>
+            <span id="cb_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
+          </div>
+
+          <div class="question-box" id="cb_questionArea">
+            <div id="cb_questionText" class="question-text-math"></div>
+          </div>
+
+          <div class="timer-area">
+            <span class="timer-label">süre</span>
+            <span id="cb_timerText" class="timerText">0.0 sn</span>
+          </div>
+
+          <div class="answer-area" id="cb_inputRow">
+            <div class="input-wrap">
+              <input id="cb_answerInput" class="answerInput" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="cevap">
+              <div id="cb_inputError" class="inputError">Önce bir cevap gir</div>
+            </div>
+            <button id="cb_submitBtn" class="submitBtn">Gönder</button>
+          </div>
+
+          <div id="cb_feedbackArea" class="feedbackArea"></div>
+          <div id="cb_summaryArea" class="summaryArea" style="display:none;"></div>
+        </div>
+      </div>
+
+
+      <!-- =====================================================
+           MODÜL 3: HİKAYELİ PROBLEMLER (TOPLAMA / ÇIKARMA)
            ===================================================== -->
       <div id="view-hikayeli" class="view-section">
         <header class="header">
-          <p class="eyebrow">Okuduğunu Anlama ve İşlem Hızı</p>
+          <p class="eyebrow">Toplama ve Çıkarma Problemleri</p>
         </header>
 
         <div class="card">
@@ -529,12 +579,50 @@
         </div>
       </div>
 
+
+      <!-- =====================================================
+           MODÜL 4: HİKAYELİ PROBLEMLER (ÇARPMA / BÖLME) - NEW
+           ===================================================== -->
+      <div id="view-hikayeliCB" class="view-section">
+        <header class="header">
+          <p class="eyebrow">Çarpma ve Bölme Problemleri</p>
+        </header>
+
+        <div class="card">
+          <div class="topbar">
+            <span id="hpcb_progressText" class="progressText">Soru 1 / 10</span>
+            <button id="hpcb_resetBtn" class="resetBtn" title="Seti Baştan Başlat">↻ Sıfırla</button>
+            <span id="hpcb_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
+          </div>
+
+          <div class="question-box" id="hpcb_questionArea">
+            <div id="hpcb_questionText" class="question-text-story"></div>
+          </div>
+
+          <div class="timer-area">
+            <span class="timer-label">süre</span>
+            <span id="hpcb_timerText" class="timerText">0.0 sn</span>
+          </div>
+
+          <div class="answer-area" id="hpcb_inputRow">
+            <div class="input-wrap">
+              <input id="hpcb_answerInput" class="answerInput" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="cevap">
+              <div id="hpcb_inputError" class="inputError">Önce bir cevap gir</div>
+            </div>
+            <button id="hpcb_submitBtn" class="submitBtn">Gönder</button>
+          </div>
+
+          <div id="hpcb_feedbackArea" class="feedbackArea"></div>
+          <div id="hpcb_summaryArea" class="summaryArea" style="display:none;"></div>
+        </div>
+      </div>
+
     </section>
   </main>
 
   <script>
     /* =====================================================
-       KLAVYEYE GÖRE EKRAN YÜKSEKLİĞİ VE KAYMA KİLİDİ (CRITICAL FIX)
+       KLAVYEYE GÖRE EKRAN YÜKSEKLİĞİ VE KAYMA KİLİDİ
        ===================================================== */
     function updateAppHeight() {
       const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -562,7 +650,7 @@
     }
 
     /* =====================================================
-       MODÜL 1: TAM SAYILAR MANTIĞI
+       MODÜL 1: TAM SAYILAR (TOPLAMA - ÇIKARMA) MANTIĞI
        ===================================================== */
     (() => {
       const TOTAL_Q = 20;
@@ -775,7 +863,251 @@
 
 
     /* =====================================================
-       MODÜL 2: HİKAYELİ PROBLEMLER MANTIĞI
+       MODÜL 2: ÇARPMA / BÖLME MANTIĞI (24 SORU)
+       ===================================================== */
+    (() => {
+      const TOTAL_Q = 24;
+      const TARGET_TOTAL = 144;
+      const TARGET_PER_Q = TARGET_TOTAL / TOTAL_Q;
+      const WRONG_PENALTY = 15;
+      const RECORD_KEY = "tyt_multdiv_speed_record_v1";
+
+      const questionArea = document.getElementById("cb_questionArea");
+      const questionText = document.getElementById("cb_questionText");
+      const timerText = document.getElementById("cb_timerText");
+      const inputRow = document.getElementById("cb_inputRow");
+      const answerInput = document.getElementById("cb_answerInput");
+      const submitBtn = document.getElementById("cb_submitBtn");
+      const resetBtn = document.getElementById("cb_resetBtn");
+      const inputError = document.getElementById("cb_inputError");
+      const feedbackArea = document.getElementById("cb_feedbackArea");
+      const progressText = document.getElementById("cb_progressText");
+      const totalTimeText = document.getElementById("cb_totalTimeText");
+      const summaryArea = document.getElementById("cb_summaryArea");
+
+      let questions = [];
+      let index = 0;
+      let times = [];
+      let corrects = [];
+      let startTime = 0;
+      let timerHandle = null;
+      let answered = false;
+
+      function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+      function signed(n) { return n < 0 ? "−" + Math.abs(n) : String(n); }
+      function formatOperand(n) { return n < 0 ? "(" + signed(n) + ")" : signed(n); }
+
+      function generateQuestions() {
+        const list = [];
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const isMult = Math.random() < 0.5;
+          if (isMult) {
+            let a, b;
+            const type = Math.random();
+            if (type < 0.35) {
+              a = randInt(5, 25) * (Math.random() < 0.5 ? -1 : 1);
+              b = randInt(5, 20) * (Math.random() < 0.5 ? -1 : 1);
+            } else if (type < 0.70) {
+              a = randInt(2, 45) * 10 * (Math.random() < 0.5 ? -1 : 1);
+              b = randInt(3, 15) * (Math.random() < 0.5 ? -1 : 1);
+              if (Math.random() < 0.5) [a, b] = [b, a];
+            } else {
+              a = randInt(8, 30) * (Math.random() < 0.5 ? -1 : 1);
+              b = randInt(6, 35) * (Math.random() < 0.5 ? -1 : 1);
+            }
+            const ans = a * b;
+            list.push({ label: `${signed(a)} × ${formatOperand(b)} =`, answer: ans });
+          } else {
+            let ans, divisor, dividend;
+            const type = Math.random();
+            if (type < 0.35) {
+              ans = randInt(2, 20) * (Math.random() < 0.5 ? -1 : 1);
+              divisor = randInt(3, 25) * (Math.random() < 0.5 ? -1 : 1);
+              dividend = ans * divisor;
+            } else if (type < 0.70) {
+              ans = randInt(2, 30) * (Math.random() < 0.5 ? -1 : 1);
+              divisor = randInt(2, 30) * (Math.random() < 0.5 ? -1 : 1);
+              if (Math.abs(divisor) < 10) divisor *= 10;
+              dividend = ans * divisor;
+            } else {
+              ans = randInt(4, 40) * (Math.random() < 0.5 ? -1 : 1);
+              divisor = randInt(6, 30) * (Math.random() < 0.5 ? -1 : 1);
+              dividend = ans * divisor;
+            }
+            list.push({ label: `${signed(dividend)} ÷ ${formatOperand(divisor)} =`, answer: ans });
+          }
+        }
+        for (let i = list.length - 1; i > 0; i--) {
+          const j = randInt(0, i);
+          [list[i], list[j]] = [list[j], list[i]];
+        }
+        return list;
+      }
+
+      function formatTime(value) { return value.toFixed(1); }
+      function realTotal() { return times.reduce((sum, value) => sum + value, 0); }
+      function wrongTotal() { return corrects.filter(value => !value).length; }
+      function penaltyTotal() { return wrongTotal() * WRONG_PENALTY; }
+      function adjustedTotal() { return realTotal() + penaltyTotal(); }
+
+      function updateTopTime() {
+        const total = adjustedTotal();
+        const penalty = penaltyTotal();
+        totalTimeText.innerHTML = "toplam " + formatTime(total) + " sn" + (penalty > 0 ? ' <span style="color:#a05b5b;">(+' + penalty + ")</span>" : "");
+      }
+
+      function updateTimerColor(seconds) {
+        let r, g, b;
+        if (seconds <= TARGET_PER_Q) {
+          const p = seconds / TARGET_PER_Q;
+          r = Math.round(238 + (214 - 238) * p);
+          g = Math.round(238 + (170 - 238) * p);
+          b = Math.round(239 + (105 - 239) * p);
+        } else if (seconds <= 8) {
+          const p = (seconds - 6) / 2;
+          r = 214;
+          g = Math.round(170 + (109 - 170) * p);
+          b = Math.round(105 + (109 - 105) * p);
+        } else {
+          const p = Math.min((seconds - 8) / 8, 1);
+          r = Math.round(214 + (184 - 214) * p);
+          g = Math.round(109 + (81 - 109) * p);
+          b = Math.round(109 + (90 - 109) * p);
+        }
+        timerText.style.color = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      function startTimer() {
+        startTime = Date.now();
+        if (timerHandle) clearInterval(timerHandle);
+        timerText.textContent = "0.0 sn";
+        updateTimerColor(0);
+        timerHandle = setInterval(() => {
+          const elapsed = (Date.now() - startTime) / 1000;
+          timerText.textContent = formatTime(elapsed) + " sn";
+          updateTimerColor(elapsed);
+        }, 100);
+      }
+
+      function stopTimer() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        return (Date.now() - startTime) / 1000;
+      }
+
+      function focusInput() { 
+        answerInput.focus({ preventScroll: true }); 
+        window.scrollTo(0, 0);
+      }
+
+      function renderQuestion() {
+        answered = false;
+        const question = questions[index];
+        progressText.textContent = `Soru ${index + 1} / ${TOTAL_Q}`;
+        questionText.textContent = question.label;
+        answerInput.value = "";
+        answerInput.disabled = false; submitBtn.disabled = false;
+        inputError.style.display = "none"; feedbackArea.innerHTML = "";
+        updateTopTime(); startTimer();
+        setTimeout(focusInput, 50);
+      }
+
+      function submitAnswer() {
+        if (answered) return;
+        const raw = answerInput.value.trim().replace(/−/g, "-");
+        if (!/^-?\d+$/.test(raw)) { inputError.style.display = "block"; focusInput(); return; }
+        inputError.style.display = "none";
+        answered = true;
+        const elapsed = stopTimer();
+        times.push(elapsed);
+        const question = questions[index];
+        const userAnswer = Number(raw);
+        const isCorrect = userAnswer === question.answer;
+        corrects.push(isCorrect);
+        answerInput.disabled = true; submitBtn.disabled = true;
+        updateTopTime();
+
+        if (isCorrect) {
+          feedbackArea.innerHTML = `<span class="correct">✓ doğru — ${formatTime(elapsed)} sn</span>`;
+        } else {
+          feedbackArea.innerHTML = `<span class="wrong">✕ yanlış, doğrusu ${signed(question.answer)} — ${formatTime(elapsed)} sn <span style="opacity:.65;">(+15 sn)</span></span>`;
+        }
+
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) renderQuestion(); else showSummary();
+        }, 800);
+      }
+
+      function getRecord() {
+        try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; }
+      }
+      function saveRecord(value) {
+        try { localStorage.setItem(RECORD_KEY, value.toString()); } catch {}
+      }
+
+      function showSummary() {
+        questionArea.style.display = "none"; document.querySelector("#view-carpmaBolme .timer-area").style.display = "none";
+        inputRow.style.display = "none"; feedbackArea.style.display = "none";
+        
+        const real = realTotal(), wrong = wrongTotal(), penalty = penaltyTotal(), adjusted = adjustedTotal();
+        const correct = corrects.filter(Boolean).length, average = real / TOTAL_Q;
+        const targetReached = adjusted <= TARGET_TOTAL;
+        const previousRecord = getRecord();
+        const isNewRecord = previousRecord === null || adjusted < previousRecord;
+        if (isNewRecord) saveRecord(adjusted);
+        const record = isNewRecord ? adjusted : previousRecord;
+
+        let rows = "";
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
+          rows += `<tr><td class="question-expression">${questions[i].label}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
+        }
+
+        summaryArea.style.display = "block";
+        summaryArea.innerHTML = `
+          <div class="result-main">
+            <p class="result-title">cezalı toplam süre</p>
+            <p class="result-score">${formatTime(adjusted)} <small>sn</small></p>
+            <div class="result-grid">
+              <div class="result-item"><span class="result-label">Doğru</span><span class="result-value">${correct} / ${TOTAL_Q}</span></div>
+              <div class="result-item"><span class="result-label">Yanlış</span><span class="result-value">${wrong}</span></div>
+              <div class="result-item"><span class="result-label">Gerçek süre</span><span class="result-value">${formatTime(real)} sn</span></div>
+              <div class="result-item"><span class="result-label">Yanlış cezası</span><span class="result-value">+${penalty} sn</span></div>
+              <div class="result-item"><span class="result-label">Ortalama</span><span class="result-value">${formatTime(average)} sn</span></div>
+              <div class="result-item"><span class="result-label">Hedef</span><span class="result-value" style="color:${targetReached ? "#59c984" : "#a7a7ad"};">${targetReached ? TARGET_TOTAL + " sn ✓" : TARGET_TOTAL + " sn"}</span></div>
+            </div>
+          </div>
+          <div class="record-box"><span class="record-label">🏆 Rekor</span><span class="record-value">${formatTime(record)} sn</span></div>
+          ${isNewRecord ? `<div class="new-record">Yeni rekor.</div>` : ""}
+          <div class="target-message">${TOTAL_Q} soru için hedef <strong style="color:#bdbdc2;">${TARGET_TOTAL} saniye</strong>.<br>Soru başına hedef <strong style="color:#bdbdc2;">${TARGET_PER_Q.toFixed(1)} saniye</strong>.<br>Her yanlış cevap <strong style="color:#bdbdc2;">+${WRONG_PENALTY} saniye</strong> ceza.</div>
+          <table class="question-table">${rows}</table>
+          <button class="restartBtn" id="cb_restartBtn">↻ &nbsp; Yeni set</button>
+        `;
+        document.getElementById("cb_restartBtn").addEventListener("click", restart);
+      }
+
+      function restart() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        questions = generateQuestions(); index = 0; times = []; corrects = [];
+        summaryArea.style.display = "none"; summaryArea.innerHTML = "";
+        questionArea.style.display = "flex"; document.querySelector("#view-carpmaBolme .timer-area").style.display = "flex";
+        inputRow.style.display = "flex"; feedbackArea.style.display = "block";
+        renderQuestion();
+      }
+
+      submitBtn.addEventListener("click", submitAnswer);
+      resetBtn.addEventListener("click", restart);
+      answerInput.addEventListener("focus", () => window.scrollTo(0, 0));
+      answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
+      answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
+
+      questions = generateQuestions();
+      renderQuestion();
+    })();
+
+
+    /* =====================================================
+       MODÜL 3: HİKAYELİ PROBLEMLER (TOPLAMA - ÇIKARMA)
        ===================================================== */
     (() => {
       const TOTAL_Q = 10; 
@@ -982,6 +1314,271 @@
         questions = generateQuestions(); index = 0; times = []; corrects = [];
         summaryArea.style.display = "none"; summaryArea.innerHTML = "";
         questionArea.style.display = "flex"; document.querySelector("#view-hikayeli .timer-area").style.display = "flex";
+        inputRow.style.display = "flex"; feedbackArea.style.display = "block";
+        renderQuestion();
+      }
+
+      submitBtn.addEventListener("click", submitAnswer);
+      resetBtn.addEventListener("click", restart);
+      answerInput.addEventListener("focus", () => window.scrollTo(0, 0));
+      answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
+      answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
+
+      questions = generateQuestions();
+      renderQuestion();
+    })();
+
+
+    /* =====================================================
+       MODÜL 4: HİKAYELİ PROBLEMLER (ÇARPMA / BÖLME) - 10 SORU
+       ===================================================== */
+    (() => {
+      const TOTAL_Q = 10; 
+      const TARGET_TOTAL = 180;
+      const TARGET_PER_Q = TARGET_TOTAL / TOTAL_Q;
+      const WRONG_PENALTY = 15;
+      const RECORD_KEY = "tyt_story_multdiv_speed_record_v1";
+
+      const questionArea = document.getElementById("hpcb_questionArea");
+      const questionText = document.getElementById("hpcb_questionText");
+      const timerText = document.getElementById("hpcb_timerText");
+      const inputRow = document.getElementById("hpcb_inputRow");
+      const answerInput = document.getElementById("hpcb_answerInput");
+      const submitBtn = document.getElementById("hpcb_submitBtn");
+      const resetBtn = document.getElementById("hpcb_resetBtn");
+      const inputError = document.getElementById("hpcb_inputError");
+      const feedbackArea = document.getElementById("hpcb_feedbackArea");
+      const progressText = document.getElementById("hpcb_progressText");
+      const totalTimeText = document.getElementById("hpcb_totalTimeText");
+      const summaryArea = document.getElementById("hpcb_summaryArea");
+
+      let questions = [];
+      let index = 0;
+      let times = [];
+      let corrects = [];
+      let startTime = 0;
+      let timerHandle = null;
+      let answered = false;
+
+      function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+      function elemanSec(dizi) { return dizi[Math.floor(Math.random() * dizi.length)]; }
+
+      // Görseldeki 10 farklı soru tipinin dinamik şablonları
+      const sablonlar = [
+          // 1. Tırmanma / Yükseklik (Çarpma)
+          function() {
+              let v = randInt(15, 35) * 10;
+              let t = randInt(4, 9);
+              return { label: `Bir dağcı zirveye tırmanırken her saatte ${v} metre tırmanmaktadır. Dağcı ${t} saat boyunca tırmandığına göre başlangıç noktasından kaç metre yüksektedir?`, answer: v * t };
+          },
+          // 2. Yüzde Azalma (Çarpma)
+          function() {
+              let p = randInt(4, 12);
+              let t = randInt(4, 8);
+              return { label: `Bir telefonun şarjı her saatte %${p} azalmaktadır. ${t} saat sonra toplam yüzde kaç azalma olur?`, answer: p * t };
+          },
+          // 3. Günlük Üretim / Basım (Çarpma)
+          function() {
+              let n = randInt(18, 45) * 10;
+              let d = randInt(3, 8);
+              let birim = elemanSec(["kitap", "dergi", "ürün", "kutu"]);
+              return { label: `Bir yayınevinde her gün ${n} ${birim} basılmaktadır. ${d} gün sonunda toplam kaç ${birim} basılmış olur?`, answer: n * d };
+          },
+          // 4. Tur / Ziyaretçi Paylaşımı (Bölme)
+          function() {
+              let ans = randInt(40, 110);
+              let n = randInt(8, 18);
+              let total = ans * n;
+              return { label: `Bir müzede rehber aynı turu ${n} kez yapmıştır. Toplamda ${total.toLocaleString("tr-TR")} ziyaretçiye tur anlattığına göre her turda ortalama kaç ziyaretçi vardır?`, answer: ans };
+          },
+          // 5. Günlük Dağıtım (Bölme)
+          function() {
+              let ans = randInt(150, 500);
+              let d = randInt(5, 12);
+              let total = ans * d;
+              return { label: `Bir düğün için ${total.toLocaleString("tr-TR")} davetiye basılmıştır. Davetiyeler ${d} günde eşit sayıda dağıtılacağına göre günde kaç davetiye dağıtılır?`, answer: ans };
+          },
+          // 6. Düzenli Ödeme / Aidat (Çarpma)
+          function() {
+              let amount = randInt(12, 35) * 100;
+              let m = randInt(5, 12);
+              let tur = elemanSec(["kira", "aidat", "taksit"]);
+              return { label: `Bir banka hesabından her ay ${amount.toLocaleString("tr-TR")} ₺ ${tur} ödenmektedir. ${m} ay sonunda toplam kaç ₺ ${tur} ödenmiş olur?`, answer: amount * m };
+          },
+          // 7. Seans / Kategori Bölüşümü (Bölme)
+          function() {
+              let ans = randInt(120, 320);
+              let n = randInt(8, 16);
+              let total = ans * n;
+              return { label: `Bir sinema salonunda ${total.toLocaleString("tr-TR")} bilet satılmıştır. Bu biletler ${n} seansa eşit dağıtıldığına göre her seans kaç bilet satılmıştır?`, answer: ans };
+          },
+          // 8. Sporcu Koşusu / Günlük Mesafe (Çarpma)
+          function() {
+              let d = randInt(3, 12);
+              let t = randInt(12, 30);
+              return { label: `Bir sporcu her gün ${d} km koşmaktadır. ${t} gün sonunda toplam kaç km koşmuş olur?`, answer: d * t };
+          },
+          // 9. Parçalara Bölme (Bölme)
+          function() {
+              let ans = randInt(60, 150);
+              let n = randInt(6, 15);
+              let total = ans * n;
+              return { label: `Bir marangoz ${total.toLocaleString("tr-TR")} santimetrelik bir tahtayı ${n} eşit parçaya bölmektedir. Her parça kaç santimetredir?`, answer: ans };
+          },
+          // 10. Klasör / Dosya Dağıtımı (Bölme)
+          function() {
+              let ans = randInt(150, 450);
+              let n = randInt(6, 12);
+              let total = ans * n;
+              let tur = elemanSec(["fotoğrafı", "belgeyi", "dosyayı"]);
+              return { label: `Bir fotoğrafçı ${total.toLocaleString("tr-TR")} ${tur} ${n} eşit klasöre yerleştirmiştir. Her klasörde kaç ${tur.slice(0, -1)} vardır?`, answer: ans };
+          }
+      ];
+
+      function generateQuestions() {
+        const list = [];
+        for (let i = 0; i < TOTAL_Q; i++) {
+          list.push(sablonlar[i]());
+        }
+        for (let i = list.length - 1; i > 0; i--) {
+          const j = randInt(0, i);
+          [list[i], list[j]] = [list[j], list[i]];
+        }
+        return list;
+      }
+
+      function formatTime(value) { return value.toFixed(1); }
+      function realTotal() { return times.reduce((sum, value) => sum + value, 0); }
+      function wrongTotal() { return corrects.filter(value => !value).length; }
+      function penaltyTotal() { return wrongTotal() * WRONG_PENALTY; }
+      function adjustedTotal() { return realTotal() + penaltyTotal(); }
+
+      function updateTopTime() {
+        const total = adjustedTotal(), penalty = penaltyTotal();
+        totalTimeText.innerHTML = "toplam " + formatTime(total) + " sn" + (penalty > 0 ? ' <span style="color:#a05b5b;">(+' + penalty + ")</span>" : "");
+      }
+
+      function updateTimerColor(seconds) {
+        let r, g, b;
+        if (seconds <= TARGET_PER_Q) {
+          const p = seconds / TARGET_PER_Q;
+          r = Math.round(238 + (214 - 238) * p); g = Math.round(238 + (170 - 238) * p); b = Math.round(239 + (105 - 239) * p);
+        } else if (seconds <= TARGET_PER_Q + 5) {
+          const p = (seconds - TARGET_PER_Q) / 5;
+          r = 214; g = Math.round(170 + (109 - 170) * p); b = Math.round(105 + (109 - 105) * p);
+        } else {
+          const p = Math.min((seconds - (TARGET_PER_Q + 5)) / 8, 1);
+          r = Math.round(214 + (184 - 214) * p); g = Math.round(109 + (81 - 109) * p); b = Math.round(90 + (109 - 90) * p);
+        }
+        timerText.style.color = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      function startTimer() {
+        startTime = Date.now();
+        if (timerHandle) clearInterval(timerHandle);
+        timerText.textContent = "0.0 sn"; updateTimerColor(0);
+        timerHandle = setInterval(() => {
+          const elapsed = (Date.now() - startTime) / 1000;
+          timerText.textContent = formatTime(elapsed) + " sn"; updateTimerColor(elapsed);
+        }, 100);
+      }
+
+      function stopTimer() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        return (Date.now() - startTime) / 1000;
+      }
+
+      function focusInput() { 
+        answerInput.focus({ preventScroll: true }); 
+        window.scrollTo(0, 0);
+      }
+
+      function renderQuestion() {
+        answered = false;
+        const question = questions[index];
+        progressText.textContent = `Soru ${index + 1} / ${TOTAL_Q}`;
+        questionText.textContent = question.label;
+        answerInput.value = ""; answerInput.disabled = false; submitBtn.disabled = false;
+        inputError.style.display = "none"; feedbackArea.innerHTML = "";
+        updateTopTime(); startTimer();
+        setTimeout(focusInput, 50);
+      }
+
+      function submitAnswer() {
+        if (answered) return;
+        const raw = answerInput.value.trim().replace(/−/g, "-");
+        if (!/^-?\d+$/.test(raw)) { inputError.style.display = "block"; focusInput(); return; }
+        inputError.style.display = "none"; answered = true;
+        const elapsed = stopTimer(); times.push(elapsed);
+        const question = questions[index];
+        const userAnswer = Number(raw);
+        const isCorrect = userAnswer === question.answer;
+        corrects.push(isCorrect);
+        answerInput.disabled = true; submitBtn.disabled = true;
+        updateTopTime();
+
+        if (isCorrect) {
+          feedbackArea.innerHTML = `<span class="correct">✓ doğru — ${formatTime(elapsed)} sn</span>`;
+        } else {
+          feedbackArea.innerHTML = `<span class="wrong">✕ yanlış, doğrusu ${question.answer} — ${formatTime(elapsed)} sn <span style="opacity:.65;">(+15 sn)</span></span>`;
+        }
+
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) renderQuestion(); else showSummary();
+        }, 900);
+      }
+
+      function getRecord() { try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; } }
+      function saveRecord(value) { try { localStorage.setItem(RECORD_KEY, value.toString()); } catch {} }
+
+      function showSummary() {
+        questionArea.style.display = "none"; document.querySelector("#view-hikayeliCB .timer-area").style.display = "none";
+        inputRow.style.display = "none"; feedbackArea.style.display = "none";
+        
+        const real = realTotal(), wrong = wrongTotal(), penalty = penaltyTotal(), adjusted = adjustedTotal();
+        const correct = corrects.filter(Boolean).length, average = real / TOTAL_Q;
+        const targetReached = adjusted <= TARGET_TOTAL;
+        const previousRecord = getRecord();
+        const isNewRecord = previousRecord === null || adjusted < previousRecord;
+        if (isNewRecord) saveRecord(adjusted);
+        const record = isNewRecord ? adjusted : previousRecord;
+
+        let rows = "";
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
+          let kisaMetin = questions[i].label.substring(0, 42) + "..."; 
+          rows += `<tr><td class="question-expression story-table-text" style="text-align:left;">${kisaMetin}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
+        }
+
+        summaryArea.style.display = "block";
+        summaryArea.innerHTML = `
+          <div class="result-main">
+            <p class="result-title">cezalı toplam süre</p>
+            <p class="result-score">${formatTime(adjusted)} <small>sn</small></p>
+            <div class="result-grid">
+              <div class="result-item"><span class="result-label">Doğru</span><span class="result-value">${correct} / ${TOTAL_Q}</span></div>
+              <div class="result-item"><span class="result-label">Yanlış</span><span class="result-value">${wrong}</span></div>
+              <div class="result-item"><span class="result-label">Gerçek süre</span><span class="result-value">${formatTime(real)} sn</span></div>
+              <div class="result-item"><span class="result-label">Yanlış cezası</span><span class="result-value">+${penalty} sn</span></div>
+              <div class="result-item"><span class="result-label">Ortalama</span><span class="result-value">${formatTime(average)} sn</span></div>
+              <div class="result-item"><span class="result-label">Hedef</span><span class="result-value" style="color:${targetReached ? "#59c984" : "#a7a7ad"};">${targetReached ? TARGET_TOTAL + " sn ✓" : TARGET_TOTAL + " sn"}</span></div>
+            </div>
+          </div>
+          <div class="record-box"><span class="record-label">🏆 Rekor</span><span class="record-value">${formatTime(record)} sn</span></div>
+          ${isNewRecord ? `<div class="new-record">Yeni rekor.</div>` : ""}
+          <div class="target-message">${TOTAL_Q} soru için hedef <strong style="color:#bdbdc2;">${TARGET_TOTAL} saniye</strong>.<br>Soru başına hedef <strong style="color:#bdbdc2;">${TARGET_PER_Q.toFixed(1)} saniye</strong>.<br>Her yanlış cevap <strong style="color:#bdbdc2;">+${WRONG_PENALTY} saniye</strong> ceza.</div>
+          <table class="question-table">${rows}</table>
+          <button class="restartBtn" id="hpcb_restartBtn">↻ &nbsp; Yeni set</button>
+        `;
+        document.getElementById("hpcb_restartBtn").addEventListener("click", restart);
+      }
+
+      function restart() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        questions = generateQuestions(); index = 0; times = []; corrects = [];
+        summaryArea.style.display = "none"; summaryArea.innerHTML = "";
+        questionArea.style.display = "flex"; document.querySelector("#view-hikayeliCB .timer-area").style.display = "flex";
         inputRow.style.display = "flex"; feedbackArea.style.display = "block";
         renderQuestion();
       }
