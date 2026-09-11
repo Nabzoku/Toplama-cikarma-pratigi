@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <title>Matematik Hız Antrenmanları</title>
 
@@ -11,21 +11,13 @@
       box-sizing: border-box;
     }
 
-    html {
-      background: #0a0a0b;
-    }
-
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
-      min-height: 100dvh;
-      background:
-        radial-gradient(
-          circle at 50% -10%,
-          #1a1a1d 0%,
-          #0d0d0f 38%,
-          #0a0a0b 75%
-        );
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* Sayfanın yukarı/aşağı kaymasını engeller */
+      background: #0a0a0b;
       color: #eeeeef;
       font-family:
         Inter,
@@ -33,6 +25,17 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
+      touch-action: manipulation;
+    }
+
+    body {
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          #1a1a1d 0%,
+          #0d0d0f 38%,
+          #0a0a0b 75%
+        );
     }
 
     button,
@@ -41,21 +44,25 @@
     }
 
     /* =====================================================
-       ANA SAYFA
+       ANA SAYFA VE VIEWPORT DÜZENİ
        ===================================================== */
 
     .page {
       width: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
+      height: 100%;
+      height: var(--app-height, 100dvh);
       display: flex;
       justify-content: center;
-      padding: 30px 18px 40px;
+      align-items: center;
+      padding: 16px;
     }
 
     .app {
       width: 100%;
-      max-width: 560px;
+      max-width: 520px;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     /* =====================================================
@@ -64,50 +71,42 @@
     
     .tabs-container {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 6px;
+      margin-bottom: 12px;
       background: rgba(20, 20, 22, 0.94);
-      padding: 6px;
+      padding: 4px;
       border: 1px solid #29292d;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border-radius: 14px;
+      flex-shrink: 0;
     }
 
     .tab-btn {
       flex: 1;
-      padding: 12px 10px;
+      padding: 10px 8px;
       background: transparent;
       border: none;
       color: #77777f;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .tab-btn:hover {
-      color: #dddddf;
-    }
-
     .tab-btn.active {
       background: #29292d;
       color: #eeeeef;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     .view-section {
       display: none;
-      animation: fadeIn 0.3s ease;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
     }
 
     .view-section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
+      display: flex;
     }
 
     /* =====================================================
@@ -116,11 +115,12 @@
 
     .header {
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
     }
 
     .eyebrow {
-      margin: 0 0 4px;
+      margin: 0;
       color: #77777f;
       font-size: 11px;
       font-weight: 700;
@@ -133,11 +133,15 @@
        ===================================================== */
 
     .card {
-      padding: 24px;
+      padding: 18px;
       background: rgba(20, 20, 22, 0.94);
       border: 1px solid #29292d;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
     }
 
     /* =====================================================
@@ -148,9 +152,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: #77777f;
       font-size: 12px;
+      flex-shrink: 0;
     }
 
     .progressText {
@@ -171,13 +176,6 @@
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .resetBtn:hover {
-      color: #eeeeef;
-      border-color: #55555e;
-      background: rgba(255, 255, 255, 0.05);
     }
 
     .resetBtn:active {
@@ -185,27 +183,27 @@
     }
 
     /* =====================================================
-       SORU
+       SORU ALANI
        ===================================================== */
 
     .question-box {
-      min-height: 180px;
+      min-height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 15px;
+      padding: 12px;
       background: #111113;
       border: 1px solid #242428;
-      border-radius: 15px;
+      border-radius: 14px;
+      flex-grow: 1;
     }
 
     .question-text-math {
       color: #f3f3f4;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size: clamp(32px, 8vw, 48px);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: clamp(26px, 6vw, 42px);
       font-weight: 600;
       letter-spacing: 1px;
-      line-height: 1.25;
       text-align: center;
       white-space: nowrap;
     }
@@ -213,11 +211,10 @@
     .question-text-story {
       color: #f3f3f4;
       font-family: Inter, sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
-      line-height: 1.5;
+      line-height: 1.4;
       text-align: center;
-      padding: 0 5px;
     }
 
     /* =====================================================
@@ -228,13 +225,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 16px 0 14px;
+      margin: 10px 0 10px;
+      flex-shrink: 0;
     }
 
     .timer-label {
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       color: #68686f;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -243,19 +241,19 @@
     .timerText {
       color: #eeeeef;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
-      transition: color 0.25s ease;
     }
 
     /* =====================================================
-       CEVAP
+       CEVAP ALANI
        ===================================================== */
 
     .answer-area {
       display: flex;
-      gap: 9px;
+      gap: 8px;
       align-items: flex-start;
+      flex-shrink: 0;
     }
 
     .input-wrap {
@@ -264,76 +262,69 @@
 
     .answerInput {
       width: 100%;
-      height: 50px;
-      padding: 0 15px;
+      height: 44px;
+      padding: 0 12px;
       background: #0d0d0f;
       border: 1px solid #303035;
-      border-radius: 11px;
+      border-radius: 10px;
       outline: none;
       color: #f1f1f2;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       text-align: center;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .answerInput::placeholder { color: #55555c; }
     .answerInput:focus {
       border-color: #5b5b63;
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.045);
     }
 
     .submitBtn {
-      height: 50px;
-      padding: 0 22px;
+      height: 44px;
+      padding: 0 18px;
       border: 0;
-      border-radius: 11px;
+      border-radius: 10px;
       background: #eeeeef;
       color: #101012;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.08s ease, background 0.15s ease;
     }
-
-    .submitBtn:hover { background: #ffffff; }
-    .submitBtn:active { transform: scale(0.97); }
-    .submitBtn:disabled { opacity: 0.4; cursor: default; }
 
     .inputError {
       display: none;
-      margin-top: 6px;
+      margin-top: 4px;
       color: #d85f5f;
       font-size: 11px;
       text-align: center;
     }
 
     .feedbackArea {
-      min-height: 24px;
-      margin-top: 10px;
-      font-size: 13px;
+      min-height: 20px;
+      margin-top: 8px;
+      font-size: 12px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     /* =====================================================
-       SONUÇ
+       SONUÇ ALANI
        ===================================================== */
 
-    .summaryArea { margin-top: 16px; }
+    .summaryArea { margin-top: 10px; }
 
     .result-main {
-      padding: 20px;
+      padding: 16px;
       background: #111113;
       border: 1px solid #29292d;
-      border-radius: 15px;
+      border-radius: 14px;
       text-align: center;
     }
 
     .result-title {
-      margin: 0 0 5px;
+      margin: 0 0 4px;
       color: #77777f;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -343,173 +334,112 @@
       margin: 0;
       color: #f3f3f4;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 34px;
+      font-size: 28px;
       font-weight: 600;
     }
 
-    .result-score small { color: #66666e; font-size: 16px; }
+    .result-score small { color: #66666e; font-size: 14px; }
 
     .result-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      margin-top: 10px;
+      margin-top: 8px;
       border-top: 1px solid #29292d;
     }
 
     .result-item {
-      padding: 12px 8px;
+      padding: 8px 4px;
       border-bottom: 1px solid #29292d;
     }
 
     .result-item:nth-child(odd) { border-right: 1px solid #29292d; }
-    .result-label { display: block; margin-bottom: 4px; color: #68686f; font-size: 11px; }
+    .result-label { display: block; margin-bottom: 2px; color: #68686f; font-size: 10px; }
     .result-value {
       color: #dddddf;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .record-box {
-      margin-top: 12px;
-      padding: 12px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #151517;
-      border: 1px solid #29292d;
-      border-radius: 11px;
-    }
-
-    .record-label { color: #77777f; font-size: 12px; }
-    .record-value {
-      color: #d7d7d9;
       font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 14px;
       font-weight: 600;
     }
 
+    .record-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #151517;
+      border: 1px solid #29292d;
+      border-radius: 10px;
+    }
+
+    .record-label { color: #77777f; font-size: 11px; }
+    .record-value {
+      color: #d7d7d9;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
     .new-record {
-      margin-top: 8px;
+      margin-top: 6px;
       color: #63c88a;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-align: center;
     }
 
     .target-message {
-      margin-top: 12px;
-      padding: 12px;
+      margin-top: 10px;
+      padding: 10px;
       background: #151517;
       border: 1px solid #29292d;
-      border-radius: 11px;
+      border-radius: 10px;
       color: #77777f;
-      font-size: 12px;
-      line-height: 1.5;
+      font-size: 11px;
+      line-height: 1.4;
       text-align: center;
     }
 
     .question-table {
       width: 100%;
-      margin-top: 15px;
+      margin-top: 12px;
       border-collapse: collapse;
     }
 
     .question-table td {
-      padding: 8px 4px;
+      padding: 6px 4px;
       border-bottom: 1px solid #242428;
-      font-size: 12px;
-    }
-
-    .question-table tr:last-child td { border-bottom: 0; }
-    
-    .question-expression {
-      color: #77777f;
-      font-family: "SFMono-Regular", Consolas, monospace;
-    }
-    
-    .question-expression.story-table-text {
-      font-family: Inter, sans-serif;
       font-size: 11px;
     }
 
-    .question-time {
-      color: #a7a7ad;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .status { width: 24px; text-align: center; }
+    .question-expression { color: #77777f; font-family: "SFMono-Regular", Consolas, monospace; }
+    .question-expression.story-table-text { font-family: Inter, sans-serif; font-size: 10px; }
+    .question-time { color: #a7a7ad; font-family: "SFMono-Regular", Consolas, monospace; text-align: right; }
+    .status { width: 20px; text-align: center; }
     .correct { color: #59c984; }
     .wrong { color: #d85f5f; }
 
     .restartBtn {
       width: 100%;
-      height: 48px;
-      margin-top: 16px;
+      height: 44px;
+      margin-top: 12px;
       background: #19191c;
       border: 1px solid #303035;
-      border-radius: 11px;
+      border-radius: 10px;
       color: #dddddf;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
     }
 
-    .restartBtn:hover { background: #202024; border-color: #3b3b40; }
-
-    /* =====================================================
-       MOBİL OPTİMİZASYON (Klavye Açıldığında Taşmayı Önler)
-       ===================================================== */
-
+    /* MOBİL ÖZEL DÜZENLEME */
     @media (max-width: 600px) {
-      .page { 
-        padding: 10px 10px calc(15px + env(safe-area-inset-bottom)); 
-      }
-      .header { 
-        margin-bottom: 10px; 
-      }
-      .tabs-container {
-        margin-bottom: 12px;
-        padding: 4px;
-      }
-      .tab-btn {
-        padding: 9px 6px;
-        font-size: 12px;
-      }
-      .card { 
-        padding: 14px; 
-        border-radius: 16px; 
-      }
-      .topbar {
-        margin-bottom: 10px;
-      }
-      .question-box { 
-        min-height: 120px; 
-        padding: 12px 10px; 
-      }
-      .question-text-math { 
-        font-size: clamp(26px, 7vw, 36px); 
-      }
-      .question-text-story { 
-        font-size: 15px; 
-        line-height: 1.4; 
-      }
-      .timer-area { 
-        margin: 10px 0 8px; 
-      }
-      .timerText {
-        font-size: 20px;
-      }
-      .answerInput, .submitBtn {
-        height: 46px;
-      }
-      .submitBtn { 
-        min-width: 80px; 
-        padding: 0 14px; 
-      }
+      .header { display: none; } /* Ekran alanından kazanmak için mobil üst başlığı gizler */
+      .page { padding: 8px; }
+      .card { padding: 12px; border-radius: 14px; }
+      .question-box { min-height: 85px; padding: 8px; }
+      .question-text-story { font-size: 14px; }
+      .timer-area { margin: 6px 0; }
     }
   </style>
 </head>
@@ -520,8 +450,8 @@
 
       <!-- SEKMELER -->
       <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('tamSayilar')">Tam Sayılar</button>
-        <button class="tab-btn" onclick="switchTab('hikayeli')">Hikayeli Problemler</button>
+        <button class="tab-btn active" onclick="switchTab(event, 'tamSayilar')">Tam Sayılar</button>
+        <button class="tab-btn" onclick="switchTab(event, 'hikayeli')">Hikayeli Problemler</button>
       </div>
 
       <!-- =====================================================
@@ -603,11 +533,31 @@
   </main>
 
   <script>
+    /* =====================================================
+       KLAVYEYE GÖRE EKRAN YÜKSEKLİĞİ VE KAYMA KİLİDİ (CRITICAL FIX)
+       ===================================================== */
+    function updateAppHeight() {
+      const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${h}px`);
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateAppHeight);
+      window.visualViewport.addEventListener('scroll', () => {
+        window.scrollTo(0, 0);
+      });
+    }
+    window.addEventListener('resize', updateAppHeight);
+    window.addEventListener('orientationchange', updateAppHeight);
+    updateAppHeight();
+
     /* Sekme Geçiş Mantığı */
-    function switchTab(tabId) {
+    function switchTab(e, tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-      event.target.classList.add('active');
+      e.target.classList.add('active');
       document.getElementById('view-' + tabId).classList.add('active');
     }
 
@@ -714,6 +664,7 @@
 
       function focusInput() { 
         answerInput.focus({ preventScroll: true }); 
+        window.scrollTo(0, 0);
       }
 
       function renderQuestion() {
@@ -725,7 +676,7 @@
         answerInput.disabled = false; submitBtn.disabled = false;
         inputError.style.display = "none"; feedbackArea.innerHTML = "";
         updateTopTime(); startTimer();
-        setTimeout(focusInput, 40);
+        setTimeout(focusInput, 50);
       }
 
       function submitAnswer() {
@@ -752,7 +703,7 @@
         setTimeout(() => {
           index++;
           if (index < questions.length) renderQuestion(); else showSummary();
-        }, 900);
+        }, 800);
       }
 
       function getRecord() {
@@ -814,6 +765,7 @@
 
       submitBtn.addEventListener("click", submitAnswer);
       resetBtn.addEventListener("click", restart);
+      answerInput.addEventListener("focus", () => window.scrollTo(0, 0));
       answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
       answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
 
@@ -859,7 +811,7 @@
       const sablonlar = [
           function(seviye) {
               let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 10 : 100);
-              let s = randInt(50, 150) * carpan, c1 = randInt(15, s/2) * carpan, c2 = randInt(10, 80) * carpan;
+              let s = randInt(50, 150) * carpan, c1 = randInt(15, Math.floor(s/2)) * carpan, c2 = randInt(10, 80) * carpan;
               let mekan = elemanSec(["manav", "restoran", "fırın", "kırtasiye"]);
               let urun = elemanSec(["portakal", "tabak", "ekmek", "defter"]);
               let birim = elemanSec(["kg", "adet", "tane"]);
@@ -919,7 +871,7 @@
           r = 214; g = Math.round(170 + (109 - 170) * p); b = Math.round(105 + (109 - 105) * p);
         } else {
           const p = Math.min((seconds - (TARGET_PER_Q + 5)) / 8, 1);
-          r = Math.round(214 + (184 - 214) * p); g = Math.round(109 + (81 - 109) * p); b = Math.round(109 + (90 - 109) * p);
+          r = Math.round(214 + (184 - 214) * p); g = Math.round(109 + (81 - 109) * p); b = Math.round(90 + (109 - 90) * p);
         }
         timerText.style.color = `rgb(${r}, ${g}, ${b})`;
       }
@@ -941,6 +893,7 @@
 
       function focusInput() { 
         answerInput.focus({ preventScroll: true }); 
+        window.scrollTo(0, 0);
       }
 
       function renderQuestion() {
@@ -951,7 +904,7 @@
         answerInput.value = ""; answerInput.disabled = false; submitBtn.disabled = false;
         inputError.style.display = "none"; feedbackArea.innerHTML = "";
         updateTopTime(); startTimer();
-        setTimeout(focusInput, 40);
+        setTimeout(focusInput, 50);
       }
 
       function submitAnswer() {
@@ -976,7 +929,7 @@
         setTimeout(() => {
           index++;
           if (index < questions.length) renderQuestion(); else showSummary();
-        }, 1000);
+        }, 900);
       }
 
       function getRecord() { try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; } }
@@ -997,7 +950,7 @@
         let rows = "";
         for (let i = 0; i < TOTAL_Q; i++) {
           const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
-          let kisaMetin = questions[i].label.substring(0, 45) + "..."; 
+          let kisaMetin = questions[i].label.substring(0, 42) + "..."; 
           rows += `<tr><td class="question-expression story-table-text" style="text-align:left;">${kisaMetin}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
         }
 
@@ -1035,6 +988,7 @@
 
       submitBtn.addEventListener("click", submitAnswer);
       resetBtn.addEventListener("click", restart);
+      answerInput.addEventListener("focus", () => window.scrollTo(0, 0));
       answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
       answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
 
