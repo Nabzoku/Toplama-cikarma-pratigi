@@ -1,8 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <title>TYT Tam Sayılar — Hız Antrenmanı</title>
 
@@ -18,6 +19,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+
       background:
         radial-gradient(
           circle at 50% -10%,
@@ -25,7 +27,9 @@
           #0d0d0f 38%,
           #0a0a0b 75%
         );
+
       color: #eeeeef;
+
       font-family:
         Inter,
         -apple-system,
@@ -110,6 +114,9 @@
 
       box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.35);
+
+      transition:
+        transform 0.2s ease;
     }
 
     /* =====================================================
@@ -128,6 +135,12 @@
       font-size: 12px;
     }
 
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     #progressText {
       color: #a2a2a9;
       font-weight: 600;
@@ -138,6 +151,43 @@
         "SFMono-Regular",
         Consolas,
         monospace;
+    }
+
+    /* =====================================================
+       RESET BUTONU
+       ===================================================== */
+
+    #resetBtn {
+      padding: 4px 8px;
+
+      background: transparent;
+
+      border: 1px solid #303035;
+      border-radius: 7px;
+
+      color: #77777f;
+
+      font-size: 11px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        color 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease;
+    }
+
+    #resetBtn:hover {
+      color: #d5d5d8;
+
+      background: #19191c;
+
+      border-color: #414148;
+    }
+
+    #resetBtn:active {
+      transform: scale(0.96);
     }
 
     /* =====================================================
@@ -565,6 +615,11 @@
 
     @media (max-width: 600px) {
 
+      /*
+       * Klavye açıldığında kartın input'a daha rahat
+       * ulaşabilmesi için üst boşluğu azaltıyoruz.
+       */
+
       .page {
         padding:
           24px 10px
@@ -604,6 +659,31 @@
       #submitBtn {
         min-width: 88px;
         padding: 0 15px;
+      }
+
+      /*
+       * Mobil klavye açıkken sorunun devasa yer
+       * kaplamasını önlüyoruz.
+       */
+
+      body.keyboard-open .question-box {
+        min-height: 125px;
+      }
+
+      body.keyboard-open .timer-area {
+        margin: 10px 0 10px;
+      }
+
+      body.keyboard-open #questionText {
+        font-size: clamp(27px, 8vw, 36px);
+      }
+
+      body.keyboard-open .header {
+        display: none;
+      }
+
+      body.keyboard-open .page {
+        padding-top: 10px;
       }
     }
 
@@ -664,9 +744,21 @@
 
         <div class="topbar">
 
-          <span id="progressText">
-            Soru 1 / 20
-          </span>
+          <div class="topbar-left">
+
+            <span id="progressText">
+              Soru 1 / 20
+            </span>
+
+            <button
+              id="resetBtn"
+              type="button"
+            >
+              ↻ Sıfırla
+            </button>
+
+          </div>
+
 
           <span id="totalTimeText">
             toplam 0.0 sn
@@ -730,7 +822,10 @@
           </div>
 
 
-          <button id="submitBtn">
+          <button
+            id="submitBtn"
+            type="button"
+          >
             Gönder
           </button>
 
@@ -768,7 +863,7 @@
     const TARGET_TOTAL = 120;
 
     const TARGET_PER_Q =
-      TARGET_TOTAL / TOTAL_Q; // 6 saniye
+      TARGET_TOTAL / TOTAL_Q;
 
     const WRONG_PENALTY = 15;
 
@@ -812,6 +907,9 @@
 
     const summaryArea =
       document.getElementById("summaryArea");
+
+    const resetBtn =
+      document.getElementById("resetBtn");
 
 
     /* =====================================================
@@ -861,8 +959,6 @@
 
     /* =====================================================
        SORU ÜRETİMİ
-
-       ORİJİNAL KODUNLA AYNI
        ===================================================== */
 
     function generateQuestions() {
@@ -1050,14 +1146,6 @@
 
     /* =====================================================
        SÜRE RENGİ
-
-       0 sn → beyaz
-       6 sn → sıcak sarı
-       8 sn → yumuşak kırmızı
-       8+   → daha koyu kırmızı
-
-       Amaç gözü bağırmak değil,
-       beynin "hızlan" sinyalini vermek.
        ===================================================== */
 
     function updateTimerColor(seconds) {
@@ -1074,12 +1162,6 @@
         const p =
           seconds / TARGET_PER_Q;
 
-
-        /*
-         * #eeeeef
-         * →
-         * #d6aa69
-         */
 
         r =
           Math.round(
@@ -1109,12 +1191,6 @@
           (seconds - 6) / 2;
 
 
-        /*
-         * #d6aa69
-         * →
-         * #d66d6d
-         */
-
         r = 214;
 
         g =
@@ -1139,12 +1215,6 @@
             1
           );
 
-
-        /*
-         * #d66d6d
-         * →
-         * #b8515a
-         */
 
         r =
           Math.round(
@@ -1253,6 +1323,99 @@
     function focusInput() {
 
       answerInput.focus();
+
+    }
+
+
+    /* =====================================================
+       MOBİL KLAVYE YARDIMCISI
+       ===================================================== */
+
+    function keepInputVisible() {
+
+      if (
+        !window.visualViewport
+      ) {
+
+        answerInput.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+        return;
+
+      }
+
+
+      const viewport =
+        window.visualViewport;
+
+
+      const rect =
+        answerInput.getBoundingClientRect();
+
+
+      const keyboardTop =
+        viewport.height;
+
+
+      const bottom =
+        rect.bottom;
+
+
+      /*
+       * Input klavyenin altında kalıyorsa
+       * sayfayı yukarı kaydır.
+       */
+
+      if (
+        bottom >
+        keyboardTop - 15
+      ) {
+
+        const amount =
+          bottom -
+          (keyboardTop - 15);
+
+
+        window.scrollBy({
+          top: amount + 20,
+          behavior: "smooth"
+        });
+
+      }
+
+    }
+
+
+    function keyboardOpened() {
+
+      document.body.classList.add(
+        "keyboard-open"
+      );
+
+
+      setTimeout(() => {
+
+        keepInputVisible();
+
+      }, 80);
+
+
+      setTimeout(() => {
+
+        keepInputVisible();
+
+      }, 300);
+
+    }
+
+
+    function keyboardClosed() {
+
+      document.body.classList.remove(
+        "keyboard-open"
+      );
 
     }
 
@@ -1555,9 +1718,7 @@
           : previousRecord;
 
 
-      /* ---------------------------------------------
-         SORU TABLOSU
-         --------------------------------------------- */
+      /* SORU TABLOSU */
 
       let rows = "";
 
@@ -1763,7 +1924,10 @@
         </table>
 
 
-        <button id="restartBtn">
+        <button
+          id="restartBtn"
+          type="button"
+        >
           ↻ &nbsp; Yeni set
         </button>
       `;
@@ -1796,6 +1960,11 @@
       }
 
 
+      document.body.classList.remove(
+        "keyboard-open"
+      );
+
+
       questions =
         generateQuestions();
 
@@ -1805,6 +1974,8 @@
       times = [];
 
       corrects = [];
+
+      answered = false;
 
 
       summaryArea.style.display =
@@ -1829,13 +2000,33 @@
         "block";
 
 
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
       renderQuestion();
 
     }
 
 
     /* =====================================================
-       BUTON
+       RESET BUTONU
+       ===================================================== */
+
+    resetBtn.addEventListener(
+      "click",
+      () => {
+
+        restart();
+
+      }
+    );
+
+
+    /* =====================================================
+       GÖNDER BUTONU
        ===================================================== */
 
     submitBtn.addEventListener(
@@ -1888,6 +2079,108 @@
 
 
     /* =====================================================
+       MOBİL KLAVYE TAKİBİ
+       ===================================================== */
+
+    if (window.visualViewport) {
+
+      let previousHeight =
+        window.visualViewport.height;
+
+
+      window.visualViewport.addEventListener(
+        "resize",
+        () => {
+
+          const currentHeight =
+            window.visualViewport.height;
+
+
+          /*
+           * Viewport ciddi şekilde küçüldüyse
+           * mobil klavye açılmış kabul ediyoruz.
+           */
+
+          if (
+            currentHeight <
+            previousHeight - 80
+          ) {
+
+            keyboardOpened();
+
+          }
+
+
+          /*
+           * Viewport tekrar büyüdüyse
+           * klavye kapanmıştır.
+           */
+
+          if (
+            currentHeight >
+            previousHeight + 80
+          ) {
+
+            keyboardClosed();
+
+          }
+
+
+          previousHeight =
+            currentHeight;
+
+        }
+      );
+
+
+      window.visualViewport.addEventListener(
+        "scroll",
+        () => {
+
+          if (
+            document.activeElement ===
+            answerInput
+          ) {
+
+            keepInputVisible();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /*
+     * Input'a dokunulduğunda da bir kez
+     * kontrol ediyoruz.
+     */
+
+    answerInput.addEventListener(
+      "focus",
+      () => {
+
+        document.body.classList.add(
+          "keyboard-open"
+        );
+
+
+        setTimeout(
+          keepInputVisible,
+          250
+        );
+
+        setTimeout(
+          keepInputVisible,
+          500
+        );
+
+      }
+    );
+
+
+    /* =====================================================
        BAŞLAT
        ===================================================== */
 
@@ -1902,3 +2195,4 @@
 
 </body>
 </html>
+```
