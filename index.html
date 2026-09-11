@@ -18,6 +18,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       background:
         radial-gradient(
           circle at 50% -10%,
@@ -46,9 +47,10 @@
     .page {
       width: 100%;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
-      padding: 42px 18px 60px;
+      padding: 30px 18px 40px;
     }
 
     .app {
@@ -63,7 +65,7 @@
     .tabs-container {
       display: flex;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       background: rgba(20, 20, 22, 0.94);
       padding: 6px;
       border: 1px solid #29292d;
@@ -114,11 +116,11 @@
 
     .header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     .eyebrow {
-      margin: 0 0 8px;
+      margin: 0 0 4px;
       color: #77777f;
       font-size: 11px;
       font-weight: 700;
@@ -139,14 +141,14 @@
     }
 
     /* =====================================================
-       ÜST SATIR
+       ÜST SATIR VE SIFIRLA BUTONU
        ===================================================== */
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       color: #77777f;
       font-size: 12px;
     }
@@ -160,16 +162,38 @@
       font-family: "SFMono-Regular", Consolas, monospace;
     }
 
+    .resetBtn {
+      background: transparent;
+      border: 1px solid #303035;
+      color: #888890;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .resetBtn:hover {
+      color: #eeeeef;
+      border-color: #55555e;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .resetBtn:active {
+      transform: scale(0.95);
+    }
+
     /* =====================================================
        SORU
        ===================================================== */
 
     .question-box {
-      min-height: 220px;
+      min-height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 25px 15px;
+      padding: 20px 15px;
       background: #111113;
       border: 1px solid #242428;
       border-radius: 15px;
@@ -189,11 +213,11 @@
     .question-text-story {
       color: #f3f3f4;
       font-family: Inter, sans-serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 500;
-      line-height: 1.6;
+      line-height: 1.5;
       text-align: center;
-      padding: 0 10px;
+      padding: 0 5px;
     }
 
     /* =====================================================
@@ -204,11 +228,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 20px 0 18px;
+      margin: 16px 0 14px;
     }
 
     .timer-label {
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       color: #68686f;
       font-size: 10px;
       font-weight: 700;
@@ -219,7 +243,7 @@
     .timerText {
       color: #eeeeef;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 600;
       transition: color 0.25s ease;
     }
@@ -240,7 +264,7 @@
 
     .answerInput {
       width: 100%;
-      height: 52px;
+      height: 50px;
       padding: 0 15px;
       background: #0d0d0f;
       border: 1px solid #303035;
@@ -261,7 +285,7 @@
     }
 
     .submitBtn {
-      height: 52px;
+      height: 50px;
       padding: 0 22px;
       border: 0;
       border-radius: 11px;
@@ -286,8 +310,8 @@
     }
 
     .feedbackArea {
-      min-height: 27px;
-      margin-top: 13px;
+      min-height: 24px;
+      margin-top: 10px;
       font-size: 13px;
       text-align: center;
     }
@@ -296,10 +320,10 @@
        SONUÇ
        ===================================================== */
 
-    .summaryArea { margin-top: 20px; }
+    .summaryArea { margin-top: 16px; }
 
     .result-main {
-      padding: 22px;
+      padding: 20px;
       background: #111113;
       border: 1px solid #29292d;
       border-radius: 15px;
@@ -319,11 +343,11 @@
       margin: 0;
       color: #f3f3f4;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 600;
     }
 
-    .result-score small { color: #66666e; font-size: 17px; }
+    .result-score small { color: #66666e; font-size: 16px; }
 
     .result-grid {
       display: grid;
@@ -333,22 +357,22 @@
     }
 
     .result-item {
-      padding: 14px 8px;
+      padding: 12px 8px;
       border-bottom: 1px solid #29292d;
     }
 
     .result-item:nth-child(odd) { border-right: 1px solid #29292d; }
-    .result-label { display: block; margin-bottom: 5px; color: #68686f; font-size: 11px; }
+    .result-label { display: block; margin-bottom: 4px; color: #68686f; font-size: 11px; }
     .result-value {
       color: #dddddf;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 600;
     }
 
     .record-box {
       margin-top: 12px;
-      padding: 13px 15px;
+      padding: 12px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -375,13 +399,13 @@
 
     .target-message {
       margin-top: 12px;
-      padding: 14px;
+      padding: 12px;
       background: #151517;
       border: 1px solid #29292d;
       border-radius: 11px;
       color: #77777f;
       font-size: 12px;
-      line-height: 1.6;
+      line-height: 1.5;
       text-align: center;
     }
 
@@ -392,7 +416,7 @@
     }
 
     .question-table td {
-      padding: 9px 4px;
+      padding: 8px 4px;
       border-bottom: 1px solid #242428;
       font-size: 12px;
     }
@@ -404,7 +428,6 @@
       font-family: "SFMono-Regular", Consolas, monospace;
     }
     
-    /* Hikayeli için tablo içi metin stili */
     .question-expression.story-table-text {
       font-family: Inter, sans-serif;
       font-size: 11px;
@@ -423,7 +446,7 @@
 
     .restartBtn {
       width: 100%;
-      height: 50px;
+      height: 48px;
       margin-top: 16px;
       background: #19191c;
       border: 1px solid #303035;
@@ -438,28 +461,55 @@
     .restartBtn:hover { background: #202024; border-color: #3b3b40; }
 
     /* =====================================================
-       MOBİL
+       MOBİL OPTİMİZASYON (Klavye Açıldığında Taşmayı Önler)
        ===================================================== */
 
     @media (max-width: 600px) {
-      .page { padding: 24px 10px calc(35px + env(safe-area-inset-bottom)); }
-      .header { margin-bottom: 20px; }
-      .card { padding: 16px; border-radius: 17px; }
-      .question-box { min-height: 185px; }
-      .question-text-math { font-size: clamp(29px, 9vw, 40px); }
-      .question-text-story { font-size: 17px; }
-      .timer-area { margin: 17px 0 15px; }
-      .answer-area { gap: 7px; }
-      .submitBtn { min-width: 88px; padding: 0 15px; }
-    }
-
-    @media (max-width: 360px) {
-      .page { padding-left: 7px; padding-right: 7px; }
-      .card { padding: 13px; }
-      .question-box { min-height: 170px; }
-      .question-text-math { font-size: 27px; }
-      .question-text-story { font-size: 15px; }
-      .submitBtn { min-width: 78px; padding: 0 11px; }
+      .page { 
+        padding: 10px 10px calc(15px + env(safe-area-inset-bottom)); 
+      }
+      .header { 
+        margin-bottom: 10px; 
+      }
+      .tabs-container {
+        margin-bottom: 12px;
+        padding: 4px;
+      }
+      .tab-btn {
+        padding: 9px 6px;
+        font-size: 12px;
+      }
+      .card { 
+        padding: 14px; 
+        border-radius: 16px; 
+      }
+      .topbar {
+        margin-bottom: 10px;
+      }
+      .question-box { 
+        min-height: 120px; 
+        padding: 12px 10px; 
+      }
+      .question-text-math { 
+        font-size: clamp(26px, 7vw, 36px); 
+      }
+      .question-text-story { 
+        font-size: 15px; 
+        line-height: 1.4; 
+      }
+      .timer-area { 
+        margin: 10px 0 8px; 
+      }
+      .timerText {
+        font-size: 20px;
+      }
+      .answerInput, .submitBtn {
+        height: 46px;
+      }
+      .submitBtn { 
+        min-width: 80px; 
+        padding: 0 14px; 
+      }
     }
   </style>
 </head>
@@ -475,7 +525,7 @@
       </div>
 
       <!-- =====================================================
-           MODÜL 1: TAM SAYILAR (Orijinal Kod)
+           MODÜL 1: TAM SAYILAR
            ===================================================== -->
       <div id="view-tamSayilar" class="view-section active">
         <header class="header">
@@ -485,6 +535,7 @@
         <div class="card">
           <div class="topbar">
             <span id="ts_progressText" class="progressText">Soru 1 / 20</span>
+            <button id="ts_resetBtn" class="resetBtn" title="Seti Baştan Başlat">↻ Sıfırla</button>
             <span id="ts_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
           </div>
 
@@ -522,6 +573,7 @@
         <div class="card">
           <div class="topbar">
             <span id="hp_progressText" class="progressText">Soru 1 / 10</span>
+            <button id="hp_resetBtn" class="resetBtn" title="Seti Baştan Başlat">↻ Sıfırla</button>
             <span id="hp_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
           </div>
 
@@ -561,7 +613,6 @@
 
     /* =====================================================
        MODÜL 1: TAM SAYILAR MANTIĞI
-       (Senin kodunun tamamen izole edilmiş hali)
        ===================================================== */
     (() => {
       const TOTAL_Q = 20;
@@ -576,6 +627,7 @@
       const inputRow = document.getElementById("ts_inputRow");
       const answerInput = document.getElementById("ts_answerInput");
       const submitBtn = document.getElementById("ts_submitBtn");
+      const resetBtn = document.getElementById("ts_resetBtn");
       const inputError = document.getElementById("ts_inputError");
       const feedbackArea = document.getElementById("ts_feedbackArea");
       const progressText = document.getElementById("ts_progressText");
@@ -660,7 +712,9 @@
         return (Date.now() - startTime) / 1000;
       }
 
-      function focusInput() { answerInput.focus(); }
+      function focusInput() { 
+        answerInput.focus({ preventScroll: true }); 
+      }
 
       function renderQuestion() {
         answered = false;
@@ -759,6 +813,7 @@
       }
 
       submitBtn.addEventListener("click", submitAnswer);
+      resetBtn.addEventListener("click", restart);
       answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
       answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
 
@@ -772,7 +827,7 @@
        ===================================================== */
     (() => {
       const TOTAL_Q = 10; 
-      const TARGET_TOTAL = 180; // Hikayeli için biraz daha yüksek hedef (Soru başı ~18sn)
+      const TARGET_TOTAL = 180;
       const TARGET_PER_Q = TARGET_TOTAL / TOTAL_Q;
       const WRONG_PENALTY = 15;
       const RECORD_KEY = "tyt_story_speed_record_v1";
@@ -783,6 +838,7 @@
       const inputRow = document.getElementById("hp_inputRow");
       const answerInput = document.getElementById("hp_answerInput");
       const submitBtn = document.getElementById("hp_submitBtn");
+      const resetBtn = document.getElementById("hp_resetBtn");
       const inputError = document.getElementById("hp_inputError");
       const feedbackArea = document.getElementById("hp_feedbackArea");
       const progressText = document.getElementById("hp_progressText");
@@ -800,7 +856,6 @@
       function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
       function elemanSec(dizi) { return dizi[Math.floor(Math.random() * dizi.length)]; }
 
-      // Hikaye Üretim Motoru
       const sablonlar = [
           function(seviye) {
               let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 10 : 100);
@@ -838,7 +893,7 @@
         const list = [];
         for (let i = 1; i <= TOTAL_Q; i++) {
           const sablon = elemanSec(sablonlar);
-          list.push(sablon(i)); // Zorluk 1'den 10'a
+          list.push(sablon(i));
         }
         return list;
       }
@@ -854,7 +909,6 @@
         totalTimeText.innerHTML = "toplam " + formatTime(total) + " sn" + (penalty > 0 ? ' <span style="color:#a05b5b;">(+' + penalty + ")</span>" : "");
       }
 
-      // Hikayeli sorularda okuma payı olduğu için renk süreleri biraz daha uzun tutulur.
       function updateTimerColor(seconds) {
         let r, g, b;
         if (seconds <= TARGET_PER_Q) {
@@ -885,7 +939,9 @@
         return (Date.now() - startTime) / 1000;
       }
 
-      function focusInput() { answerInput.focus(); }
+      function focusInput() { 
+        answerInput.focus({ preventScroll: true }); 
+      }
 
       function renderQuestion() {
         answered = false;
@@ -920,7 +976,7 @@
         setTimeout(() => {
           index++;
           if (index < questions.length) renderQuestion(); else showSummary();
-        }, 1000); // Metin okunduğu için geçiş biraz daha yavaş (900ms -> 1000ms)
+        }, 1000);
       }
 
       function getRecord() { try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; } }
@@ -941,7 +997,6 @@
         let rows = "";
         for (let i = 0; i < TOTAL_Q; i++) {
           const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
-          // Hikayeli tablo içi çok uzamasın diye metin kısaltılır
           let kisaMetin = questions[i].label.substring(0, 45) + "..."; 
           rows += `<tr><td class="question-expression story-table-text" style="text-align:left;">${kisaMetin}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
         }
@@ -979,6 +1034,7 @@
       }
 
       submitBtn.addEventListener("click", submitAnswer);
+      resetBtn.addEventListener("click", restart);
       answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
       answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
 
