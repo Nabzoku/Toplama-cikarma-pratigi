@@ -2,9 +2,9 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TYT Tam Sayılar — Hız Antrenmanı</title>
+  <title>Matematik Hız Antrenmanları</title>
 
   <style>
     * {
@@ -18,7 +18,6 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       background:
         radial-gradient(
           circle at 50% -10%,
@@ -26,9 +25,7 @@
           #0d0d0f 38%,
           #0a0a0b 75%
         );
-
       color: #eeeeef;
-
       font-family:
         Inter,
         -apple-system,
@@ -49,10 +46,8 @@
     .page {
       width: 100%;
       min-height: 100vh;
-
       display: flex;
       justify-content: center;
-
       padding: 42px 18px 60px;
     }
 
@@ -62,41 +57,73 @@
     }
 
     /* =====================================================
+       SEKMELER (TABS)
+       ===================================================== */
+    
+    .tabs-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: rgba(20, 20, 22, 0.94);
+      padding: 6px;
+      border: 1px solid #29292d;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 10px;
+      background: transparent;
+      border: none;
+      color: #77777f;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #dddddf;
+    }
+
+    .tab-btn.active {
+      background: #29292d;
+      color: #eeeeef;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .view-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =====================================================
        BAŞLIK
        ===================================================== */
 
     .header {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .eyebrow {
       margin: 0 0 8px;
-
       color: #77777f;
-
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-
-      color: #f4f4f5;
-
-      font-size: 27px;
-      font-weight: 700;
-      letter-spacing: -0.7px;
-    }
-
-    .subtitle {
-      margin: 8px 0 0;
-
-      color: #77777f;
-
-      font-size: 13px;
     }
 
     /* =====================================================
@@ -105,17 +132,10 @@
 
     .card {
       padding: 24px;
-
       background: rgba(20, 20, 22, 0.94);
-
       border: 1px solid #29292d;
       border-radius: 20px;
-
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.35);
-
-      transition:
-        transform 0.2s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     }
 
     /* =====================================================
@@ -126,67 +146,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-bottom: 18px;
-
       color: #77777f;
-
       font-size: 12px;
     }
 
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    #progressText {
+    .progressText {
       color: #a2a2a9;
       font-weight: 600;
     }
 
-    #totalTimeText {
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-    }
-
-    /* =====================================================
-       RESET BUTONU
-       ===================================================== */
-
-    #resetBtn {
-      padding: 4px 8px;
-
-      background: transparent;
-
-      border: 1px solid #303035;
-      border-radius: 7px;
-
-      color: #77777f;
-
-      font-size: 11px;
-      font-weight: 600;
-
-      cursor: pointer;
-
-      transition:
-        color 0.15s ease,
-        border-color 0.15s ease,
-        background 0.15s ease;
-    }
-
-    #resetBtn:hover {
-      color: #d5d5d8;
-
-      background: #19191c;
-
-      border-color: #414148;
-    }
-
-    #resetBtn:active {
-      transform: scale(0.96);
+    .totalTimeText {
+      font-family: "SFMono-Regular", Consolas, monospace;
     }
 
     /* =====================================================
@@ -195,36 +166,34 @@
 
     .question-box {
       min-height: 220px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       padding: 25px 15px;
-
       background: #111113;
-
       border: 1px solid #242428;
       border-radius: 15px;
     }
 
-    #questionText {
+    .question-text-math {
       color: #f3f3f4;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        "Liberation Mono",
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: clamp(32px, 8vw, 48px);
       font-weight: 600;
-
       letter-spacing: 1px;
       line-height: 1.25;
-
       text-align: center;
       white-space: nowrap;
+    }
+
+    .question-text-story {
+      color: #f3f3f4;
+      font-family: Inter, sans-serif;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.6;
+      text-align: center;
+      padding: 0 10px;
     }
 
     /* =====================================================
@@ -235,32 +204,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
       margin: 20px 0 18px;
     }
 
     .timer-label {
       margin-bottom: 5px;
-
       color: #68686f;
-
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
-    #timerText {
+    .timerText {
       color: #eeeeef;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 26px;
       font-weight: 600;
-
       transition: color 0.25s ease;
     }
 
@@ -271,7 +231,6 @@
     .answer-area {
       display: flex;
       gap: 9px;
-
       align-items: flex-start;
     }
 
@@ -279,101 +238,56 @@
       flex: 1;
     }
 
-    #answerInput {
+    .answerInput {
       width: 100%;
       height: 52px;
-
       padding: 0 15px;
-
       background: #0d0d0f;
-
       border: 1px solid #303035;
       border-radius: 11px;
-
       outline: none;
-
       color: #f1f1f2;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 20px;
       font-weight: 600;
-
       text-align: center;
-
-      transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    #answerInput::placeholder {
-      color: #55555c;
-    }
-
-    #answerInput:focus {
+    .answerInput::placeholder { color: #55555c; }
+    .answerInput:focus {
       border-color: #5b5b63;
-
-      box-shadow:
-        0 0 0 3px rgba(255,255,255,0.045);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.045);
     }
 
-    #submitBtn {
+    .submitBtn {
       height: 52px;
-
       padding: 0 22px;
-
       border: 0;
       border-radius: 11px;
-
       background: #eeeeef;
       color: #101012;
-
       font-size: 14px;
       font-weight: 700;
-
       cursor: pointer;
-
-      transition:
-        transform 0.08s ease,
-        background 0.15s ease;
+      transition: transform 0.08s ease, background 0.15s ease;
     }
 
-    #submitBtn:hover {
-      background: #ffffff;
-    }
+    .submitBtn:hover { background: #ffffff; }
+    .submitBtn:active { transform: scale(0.97); }
+    .submitBtn:disabled { opacity: 0.4; cursor: default; }
 
-    #submitBtn:active {
-      transform: scale(0.97);
-    }
-
-    #submitBtn:disabled {
-      opacity: 0.4;
-      cursor: default;
-    }
-
-    #inputError {
+    .inputError {
       display: none;
-
       margin-top: 6px;
-
       color: #d85f5f;
-
       font-size: 11px;
       text-align: center;
     }
 
-    /* =====================================================
-       GERİ BİLDİRİM
-       ===================================================== */
-
-    #feedbackArea {
+    .feedbackArea {
       min-height: 27px;
-
       margin-top: 13px;
-
       font-size: 13px;
       text-align: center;
     }
@@ -382,26 +296,19 @@
        SONUÇ
        ===================================================== */
 
-    #summaryArea {
-      margin-top: 20px;
-    }
+    .summaryArea { margin-top: 20px; }
 
     .result-main {
       padding: 22px;
-
       background: #111113;
-
       border: 1px solid #29292d;
       border-radius: 15px;
-
       text-align: center;
     }
 
     .result-title {
       margin: 0 0 5px;
-
       color: #77777f;
-
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -410,60 +317,31 @@
 
     .result-score {
       margin: 0;
-
       color: #f3f3f4;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 36px;
       font-weight: 600;
     }
 
-    .result-score small {
-      color: #66666e;
-      font-size: 17px;
-    }
+    .result-score small { color: #66666e; font-size: 17px; }
 
     .result-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-
       margin-top: 10px;
-
       border-top: 1px solid #29292d;
     }
 
     .result-item {
       padding: 14px 8px;
-
       border-bottom: 1px solid #29292d;
     }
 
-    .result-item:nth-child(odd) {
-      border-right: 1px solid #29292d;
-    }
-
-    .result-label {
-      display: block;
-
-      margin-bottom: 5px;
-
-      color: #68686f;
-
-      font-size: 11px;
-    }
-
+    .result-item:nth-child(odd) { border-right: 1px solid #29292d; }
+    .result-label { display: block; margin-bottom: 5px; color: #68686f; font-size: 11px; }
     .result-value {
       color: #dddddf;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 17px;
       font-weight: 600;
     }
@@ -471,39 +349,25 @@
     .record-box {
       margin-top: 12px;
       padding: 13px 15px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       background: #151517;
-
       border: 1px solid #29292d;
       border-radius: 11px;
     }
 
-    .record-label {
-      color: #77777f;
-      font-size: 12px;
-    }
-
+    .record-label { color: #77777f; font-size: 12px; }
     .record-value {
       color: #d7d7d9;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       font-size: 14px;
       font-weight: 600;
     }
 
     .new-record {
       margin-top: 8px;
-
       color: #63c88a;
-
       font-size: 12px;
       font-weight: 600;
       text-align: center;
@@ -512,1686 +376,616 @@
     .target-message {
       margin-top: 12px;
       padding: 14px;
-
       background: #151517;
-
       border: 1px solid #29292d;
       border-radius: 11px;
-
       color: #77777f;
-
       font-size: 12px;
       line-height: 1.6;
-
       text-align: center;
     }
 
     .question-table {
       width: 100%;
-
       margin-top: 15px;
-
       border-collapse: collapse;
     }
 
     .question-table td {
       padding: 9px 4px;
-
       border-bottom: 1px solid #242428;
-
       font-size: 12px;
     }
 
-    .question-table tr:last-child td {
-      border-bottom: 0;
-    }
-
+    .question-table tr:last-child td { border-bottom: 0; }
+    
     .question-expression {
       color: #77777f;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    
+    /* Hikayeli için tablo içi metin stili */
+    .question-expression.story-table-text {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
     }
 
     .question-time {
       color: #a7a7ad;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+      font-family: "SFMono-Regular", Consolas, monospace;
       text-align: right;
       white-space: nowrap;
     }
 
-    .status {
-      width: 24px;
-      text-align: center;
-    }
+    .status { width: 24px; text-align: center; }
+    .correct { color: #59c984; }
+    .wrong { color: #d85f5f; }
 
-    .correct {
-      color: #59c984;
-    }
-
-    .wrong {
-      color: #d85f5f;
-    }
-
-    #restartBtn {
+    .restartBtn {
       width: 100%;
       height: 50px;
-
       margin-top: 16px;
-
       background: #19191c;
-
       border: 1px solid #303035;
       border-radius: 11px;
-
       color: #dddddf;
-
       font-size: 13px;
       font-weight: 700;
-
       cursor: pointer;
-
-      transition:
-        background 0.15s ease,
-        border-color 0.15s ease;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
 
-    #restartBtn:hover {
-      background: #202024;
-      border-color: #3b3b40;
-    }
+    .restartBtn:hover { background: #202024; border-color: #3b3b40; }
 
     /* =====================================================
        MOBİL
        ===================================================== */
 
     @media (max-width: 600px) {
-
-      /*
-       * Klavye açıldığında kartın input'a daha rahat
-       * ulaşabilmesi için üst boşluğu azaltıyoruz.
-       */
-
-      .page {
-        padding:
-          24px 10px
-          calc(35px + env(safe-area-inset-bottom));
-      }
-
-      .header {
-        margin-bottom: 20px;
-      }
-
-      h1 {
-        font-size: 23px;
-      }
-
-      .card {
-        padding: 16px;
-
-        border-radius: 17px;
-      }
-
-      .question-box {
-        min-height: 185px;
-      }
-
-      #questionText {
-        font-size: clamp(29px, 9vw, 40px);
-      }
-
-      .timer-area {
-        margin: 17px 0 15px;
-      }
-
-      .answer-area {
-        gap: 7px;
-      }
-
-      #submitBtn {
-        min-width: 88px;
-        padding: 0 15px;
-      }
-
-      /*
-       * Mobil klavye açıkken sorunun devasa yer
-       * kaplamasını önlüyoruz.
-       */
-
-      body.keyboard-open .question-box {
-        min-height: 125px;
-      }
-
-      body.keyboard-open .timer-area {
-        margin: 10px 0 10px;
-      }
-
-      body.keyboard-open #questionText {
-        font-size: clamp(27px, 8vw, 36px);
-      }
-
-      body.keyboard-open .header {
-        display: none;
-      }
-
-      body.keyboard-open .page {
-        padding-top: 10px;
-      }
+      .page { padding: 24px 10px calc(35px + env(safe-area-inset-bottom)); }
+      .header { margin-bottom: 20px; }
+      .card { padding: 16px; border-radius: 17px; }
+      .question-box { min-height: 185px; }
+      .question-text-math { font-size: clamp(29px, 9vw, 40px); }
+      .question-text-story { font-size: 17px; }
+      .timer-area { margin: 17px 0 15px; }
+      .answer-area { gap: 7px; }
+      .submitBtn { min-width: 88px; padding: 0 15px; }
     }
 
     @media (max-width: 360px) {
-
-      .page {
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-
-      .card {
-        padding: 13px;
-      }
-
-      .question-box {
-        min-height: 170px;
-      }
-
-      #questionText {
-        font-size: 27px;
-      }
-
-      #submitBtn {
-        min-width: 78px;
-        padding: 0 11px;
-      }
+      .page { padding-left: 7px; padding-right: 7px; }
+      .card { padding: 13px; }
+      .question-box { min-height: 170px; }
+      .question-text-math { font-size: 27px; }
+      .question-text-story { font-size: 15px; }
+      .submitBtn { min-width: 78px; padding: 0 11px; }
     }
   </style>
 </head>
-
-
 <body>
 
   <main class="page">
-
     <section class="app">
 
-      <header class="header">
+      <!-- SEKMELER -->
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('tamSayilar')">Tam Sayılar</button>
+        <button class="tab-btn" onclick="switchTab('hikayeli')">Hikayeli Problemler</button>
+      </div>
 
-        <p class="eyebrow">
-          TYT Matematik
-        </p>
+      <!-- =====================================================
+           MODÜL 1: TAM SAYILAR (Orijinal Kod)
+           ===================================================== -->
+      <div id="view-tamSayilar" class="view-section active">
+        <header class="header">
+          <p class="eyebrow">Tam Sayılar Hız Antrenmanı</p>
+        </header>
 
-        <h1>
-          Tam Sayılar Hız Antrenmanı
-        </h1>
-
-        <p class="subtitle">
-          20 soru · soru başına 6 saniye hedef
-        </p>
-
-      </header>
-
-
-      <div class="card">
-
-        <!-- ÜST BİLGİ -->
-
-        <div class="topbar">
-
-          <div class="topbar-left">
-
-            <span id="progressText">
-              Soru 1 / 20
-            </span>
-
-            <button
-              id="resetBtn"
-              type="button"
-            >
-              ↻ Sıfırla
-            </button>
-
+        <div class="card">
+          <div class="topbar">
+            <span id="ts_progressText" class="progressText">Soru 1 / 20</span>
+            <span id="ts_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
           </div>
 
+          <div class="question-box" id="ts_questionArea">
+            <div id="ts_questionText" class="question-text-math"></div>
+          </div>
 
-          <span id="totalTimeText">
-            toplam 0.0 sn
-          </span>
+          <div class="timer-area">
+            <span class="timer-label">süre</span>
+            <span id="ts_timerText" class="timerText">0.0 sn</span>
+          </div>
 
-        </div>
-
-
-        <!-- SORU -->
-
-        <div
-          class="question-box"
-          id="questionArea"
-        >
-
-          <div id="questionText"></div>
-
-        </div>
-
-
-        <!-- KRONOMETRE -->
-
-        <div class="timer-area">
-
-          <span class="timer-label">
-            süre
-          </span>
-
-          <span id="timerText">
-            0.0 sn
-          </span>
-
-        </div>
-
-
-        <!-- CEVAP -->
-
-        <div
-          class="answer-area"
-          id="inputRow"
-        >
-
-          <div class="input-wrap">
-
-            <input
-              id="answerInput"
-              type="text"
-              inputmode="numeric"
-              enterkeyhint="done"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              placeholder="cevap"
-            >
-
-            <div id="inputError">
-              Önce bir cevap gir
+          <div class="answer-area" id="ts_inputRow">
+            <div class="input-wrap">
+              <input id="ts_answerInput" class="answerInput" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="cevap">
+              <div id="ts_inputError" class="inputError">Önce bir cevap gir</div>
             </div>
-
+            <button id="ts_submitBtn" class="submitBtn">Gönder</button>
           </div>
 
-
-          <button
-            id="submitBtn"
-            type="button"
-          >
-            Gönder
-          </button>
-
+          <div id="ts_feedbackArea" class="feedbackArea"></div>
+          <div id="ts_summaryArea" class="summaryArea" style="display:none;"></div>
         </div>
+      </div>
 
 
-        <!-- GERİ BİLDİRİM -->
+      <!-- =====================================================
+           MODÜL 2: HİKAYELİ PROBLEMLER
+           ===================================================== -->
+      <div id="view-hikayeli" class="view-section">
+        <header class="header">
+          <p class="eyebrow">Okuduğunu Anlama ve İşlem Hızı</p>
+        </header>
 
-        <div id="feedbackArea"></div>
+        <div class="card">
+          <div class="topbar">
+            <span id="hp_progressText" class="progressText">Soru 1 / 10</span>
+            <span id="hp_totalTimeText" class="totalTimeText">toplam 0.0 sn</span>
+          </div>
 
+          <div class="question-box" id="hp_questionArea">
+            <div id="hp_questionText" class="question-text-story"></div>
+          </div>
 
-        <!-- SONUÇ -->
+          <div class="timer-area">
+            <span class="timer-label">süre</span>
+            <span id="hp_timerText" class="timerText">0.0 sn</span>
+          </div>
 
-        <div
-          id="summaryArea"
-          style="display:none;"
-        ></div>
+          <div class="answer-area" id="hp_inputRow">
+            <div class="input-wrap">
+              <input id="hp_answerInput" class="answerInput" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="cevap">
+              <div id="hp_inputError" class="inputError">Önce bir cevap gir</div>
+            </div>
+            <button id="hp_submitBtn" class="submitBtn">Gönder</button>
+          </div>
 
+          <div id="hp_feedbackArea" class="feedbackArea"></div>
+          <div id="hp_summaryArea" class="summaryArea" style="display:none;"></div>
+        </div>
       </div>
 
     </section>
-
   </main>
 
-
   <script>
-  (() => {
-
-    /* =====================================================
-       AYARLAR
-       ===================================================== */
-
-    const TOTAL_Q = 20;
-
-    const TARGET_TOTAL = 120;
-
-    const TARGET_PER_Q =
-      TARGET_TOTAL / TOTAL_Q;
-
-    const WRONG_PENALTY = 15;
-
-    const RECORD_KEY =
-      "tyt_integer_speed_record_v3";
-
-
-    /* =====================================================
-       ELEMENTLER
-       ===================================================== */
-
-    const questionArea =
-      document.getElementById("questionArea");
-
-    const questionText =
-      document.getElementById("questionText");
-
-    const timerText =
-      document.getElementById("timerText");
-
-    const inputRow =
-      document.getElementById("inputRow");
-
-    const answerInput =
-      document.getElementById("answerInput");
-
-    const submitBtn =
-      document.getElementById("submitBtn");
-
-    const inputError =
-      document.getElementById("inputError");
-
-    const feedbackArea =
-      document.getElementById("feedbackArea");
-
-    const progressText =
-      document.getElementById("progressText");
-
-    const totalTimeText =
-      document.getElementById("totalTimeText");
-
-    const summaryArea =
-      document.getElementById("summaryArea");
-
-    const resetBtn =
-      document.getElementById("resetBtn");
-
-
-    /* =====================================================
-       DEĞİŞKENLER
-       ===================================================== */
-
-    let questions = [];
-
-    let index = 0;
-
-    let times = [];
-
-    let corrects = [];
-
-    let startTime = 0;
-
-    let timerHandle = null;
-
-    let answered = false;
-
-
-    /* =====================================================
-       RASTGELE SAYI
-       ===================================================== */
-
-    function randInt(min, max) {
-
-      return Math.floor(
-        Math.random() * (max - min + 1)
-      ) + min;
-
+    /* Sekme Geçiş Mantığı */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('view-' + tabId).classList.add('active');
     }
 
-
     /* =====================================================
-       SAYIYI GÖSTER
+       MODÜL 1: TAM SAYILAR MANTIĞI
+       (Senin kodunun tamamen izole edilmiş hali)
        ===================================================== */
+    (() => {
+      const TOTAL_Q = 20;
+      const TARGET_TOTAL = 120;
+      const TARGET_PER_Q = TARGET_TOTAL / TOTAL_Q;
+      const WRONG_PENALTY = 15;
+      const RECORD_KEY = "tyt_integer_speed_record_v3";
 
-    function signed(n) {
+      const questionArea = document.getElementById("ts_questionArea");
+      const questionText = document.getElementById("ts_questionText");
+      const timerText = document.getElementById("ts_timerText");
+      const inputRow = document.getElementById("ts_inputRow");
+      const answerInput = document.getElementById("ts_answerInput");
+      const submitBtn = document.getElementById("ts_submitBtn");
+      const inputError = document.getElementById("ts_inputError");
+      const feedbackArea = document.getElementById("ts_feedbackArea");
+      const progressText = document.getElementById("ts_progressText");
+      const totalTimeText = document.getElementById("ts_totalTimeText");
+      const summaryArea = document.getElementById("ts_summaryArea");
 
-      return n < 0
-        ? "−" + Math.abs(n)
-        : String(n);
+      let questions = [];
+      let index = 0;
+      let times = [];
+      let corrects = [];
+      let startTime = 0;
+      let timerHandle = null;
+      let answered = false;
 
-    }
+      function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+      function signed(n) { return n < 0 ? "−" + Math.abs(n) : String(n); }
 
-
-    /* =====================================================
-       SORU ÜRETİMİ
-       ===================================================== */
-
-    function generateQuestions() {
-
-      const list = [];
-
-      for (
-        let i = 0;
-        i < TOTAL_Q;
-        i++
-      ) {
-
-        const a =
-          randInt(10, 999) *
-          (
-            Math.random() < 0.2
-              ? -1
-              : 1
-          );
-
-
-        const b =
-          randInt(10, 999) *
-          (
-            Math.random() < 0.5
-              ? -1
-              : 1
-          );
-
-
-        const op =
-          Math.random() < 0.5
-            ? "+"
-            : "−";
-
-
-        const answer =
-          op === "+"
-            ? a + b
-            : a - b;
-
-
-        const bDisplay =
-          b < 0
-            ? "(" + signed(b) + ")"
-            : signed(b);
-
-
-        list.push({
-          label:
-            signed(a) +
-            " " +
-            op +
-            " " +
-            bDisplay +
-            " =",
-
-          answer
-        });
-
+      function generateQuestions() {
+        const list = [];
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const a = randInt(10, 999) * (Math.random() < 0.2 ? -1 : 1);
+          const b = randInt(10, 999) * (Math.random() < 0.5 ? -1 : 1);
+          const op = Math.random() < 0.5 ? "+" : "−";
+          const answer = op === "+" ? a + b : a - b;
+          const bDisplay = b < 0 ? "(" + signed(b) + ")" : signed(b);
+          list.push({ label: signed(a) + " " + op + " " + bDisplay + " =", answer });
+        }
+        for (let i = list.length - 1; i > 0; i--) {
+          const j = randInt(0, i);
+          [list[i], list[j]] = [list[j], list[i]];
+        }
+        return list;
       }
 
+      function formatTime(value) { return value.toFixed(1); }
+      function realTotal() { return times.reduce((sum, value) => sum + value, 0); }
+      function wrongTotal() { return corrects.filter(value => !value).length; }
+      function penaltyTotal() { return wrongTotal() * WRONG_PENALTY; }
+      function adjustedTotal() { return realTotal() + penaltyTotal(); }
 
-      /* Karıştır */
-
-      for (
-        let i = list.length - 1;
-        i > 0;
-        i--
-      ) {
-
-        const j =
-          randInt(0, i);
-
-        [
-          list[i],
-          list[j]
-        ] =
-        [
-          list[j],
-          list[i]
-        ];
-
+      function updateTopTime() {
+        const total = adjustedTotal();
+        const penalty = penaltyTotal();
+        totalTimeText.innerHTML = "toplam " + formatTime(total) + " sn" + (penalty > 0 ? ' <span style="color:#a05b5b;">(+' + penalty + ")</span>" : "");
       }
 
-
-      return list;
-
-    }
-
-
-    /* =====================================================
-       FORMAT
-       ===================================================== */
-
-    function formatTime(value) {
-
-      return value.toFixed(1);
-
-    }
-
-
-    /* =====================================================
-       GERÇEK TOPLAM SÜRE
-       ===================================================== */
-
-    function realTotal() {
-
-      return times.reduce(
-        (sum, value) => sum + value,
-        0
-      );
-
-    }
-
-
-    /* =====================================================
-       YANLIŞ SAYISI
-       ===================================================== */
-
-    function wrongTotal() {
-
-      return corrects.filter(
-        value => !value
-      ).length;
-
-    }
-
-
-    /* =====================================================
-       CEZA
-       ===================================================== */
-
-    function penaltyTotal() {
-
-      return (
-        wrongTotal() *
-        WRONG_PENALTY
-      );
-
-    }
-
-
-    /* =====================================================
-       CEZALI TOPLAM
-       ===================================================== */
-
-    function adjustedTotal() {
-
-      return (
-        realTotal() +
-        penaltyTotal()
-      );
-
-    }
-
-
-    /* =====================================================
-       ÜSTTEKİ SÜRE
-       ===================================================== */
-
-    function updateTopTime() {
-
-      const total =
-        adjustedTotal();
-
-      const penalty =
-        penaltyTotal();
-
-
-      totalTimeText.innerHTML =
-        "toplam " +
-        formatTime(total) +
-        " sn" +
-        (
-          penalty > 0
-            ? ' <span style="color:#a05b5b;">(+' +
-              penalty +
-              ")</span>"
-            : ""
-        );
-
-    }
-
-
-    /* =====================================================
-       SÜRE RENGİ
-       ===================================================== */
-
-    function updateTimerColor(seconds) {
-
-      let r;
-      let g;
-      let b;
-
-
-      if (
-        seconds <= TARGET_PER_Q
-      ) {
-
-        const p =
-          seconds / TARGET_PER_Q;
-
-
-        r =
-          Math.round(
-            238 +
-            (214 - 238) * p
-          );
-
-        g =
-          Math.round(
-            238 +
-            (170 - 238) * p
-          );
-
-        b =
-          Math.round(
-            239 +
-            (105 - 239) * p
-          );
-
+      function updateTimerColor(seconds) {
+        let r, g, b;
+        if (seconds <= TARGET_PER_Q) {
+          const p = seconds / TARGET_PER_Q;
+          r = Math.round(238 + (214 - 238) * p);
+          g = Math.round(238 + (170 - 238) * p);
+          b = Math.round(239 + (105 - 239) * p);
+        } else if (seconds <= 8) {
+          const p = (seconds - 6) / 2;
+          r = 214;
+          g = Math.round(170 + (109 - 170) * p);
+          b = Math.round(105 + (109 - 105) * p);
+        } else {
+          const p = Math.min((seconds - 8) / 8, 1);
+          r = Math.round(214 + (184 - 214) * p);
+          g = Math.round(109 + (81 - 109) * p);
+          b = Math.round(109 + (90 - 109) * p);
+        }
+        timerText.style.color = `rgb(${r}, ${g}, ${b})`;
       }
 
-      else if (
-        seconds <= 8
-      ) {
-
-        const p =
-          (seconds - 6) / 2;
-
-
-        r = 214;
-
-        g =
-          Math.round(
-            170 +
-            (109 - 170) * p
-          );
-
-        b =
-          Math.round(
-            105 +
-            (109 - 105) * p
-          );
-
-      }
-
-      else {
-
-        const p =
-          Math.min(
-            (seconds - 8) / 8,
-            1
-          );
-
-
-        r =
-          Math.round(
-            214 +
-            (184 - 214) * p
-          );
-
-        g =
-          Math.round(
-            109 +
-            (81 - 109) * p
-          );
-
-        b =
-          Math.round(
-            109 +
-            (90 - 109) * p
-          );
-
-      }
-
-
-      timerText.style.color =
-        `rgb(${r}, ${g}, ${b})`;
-
-    }
-
-
-    /* =====================================================
-       TIMER BAŞLAT
-       ===================================================== */
-
-    function startTimer() {
-
-      startTime =
-        Date.now();
-
-
-      if (timerHandle) {
-
-        clearInterval(timerHandle);
-
-      }
-
-
-      timerText.textContent =
-        "0.0 sn";
-
-
-      updateTimerColor(0);
-
-
-      timerHandle =
-        setInterval(() => {
-
-          const elapsed =
-            (
-              Date.now() -
-              startTime
-            ) / 1000;
-
-
-          timerText.textContent =
-            formatTime(elapsed) +
-            " sn";
-
-
-          updateTimerColor(
-            elapsed
-          );
-
+      function startTimer() {
+        startTime = Date.now();
+        if (timerHandle) clearInterval(timerHandle);
+        timerText.textContent = "0.0 sn";
+        updateTimerColor(0);
+        timerHandle = setInterval(() => {
+          const elapsed = (Date.now() - startTime) / 1000;
+          timerText.textContent = formatTime(elapsed) + " sn";
+          updateTimerColor(elapsed);
         }, 100);
-
-    }
-
-
-    /* =====================================================
-       TIMER DURDUR
-       ===================================================== */
-
-    function stopTimer() {
-
-      if (timerHandle) {
-
-        clearInterval(
-          timerHandle
-        );
-
-        timerHandle = null;
-
       }
 
-
-      return (
-        Date.now() -
-        startTime
-      ) / 1000;
-
-    }
-
-
-    /* =====================================================
-       INPUT FOCUS
-       ===================================================== */
-
-    function focusInput() {
-
-      answerInput.focus();
-
-    }
-
-
-    /* =====================================================
-       MOBİL KLAVYE YARDIMCISI
-       ===================================================== */
-
-    function keepInputVisible() {
-
-      if (
-        !window.visualViewport
-      ) {
-
-        answerInput.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-        return;
-
+      function stopTimer() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        return (Date.now() - startTime) / 1000;
       }
 
+      function focusInput() { answerInput.focus(); }
 
-      const viewport =
-        window.visualViewport;
-
-
-      const rect =
-        answerInput.getBoundingClientRect();
-
-
-      const keyboardTop =
-        viewport.height;
-
-
-      const bottom =
-        rect.bottom;
-
-
-      /*
-       * Input klavyenin altında kalıyorsa
-       * sayfayı yukarı kaydır.
-       */
-
-      if (
-        bottom >
-        keyboardTop - 15
-      ) {
-
-        const amount =
-          bottom -
-          (keyboardTop - 15);
-
-
-        window.scrollBy({
-          top: amount + 20,
-          behavior: "smooth"
-        });
-
+      function renderQuestion() {
+        answered = false;
+        const question = questions[index];
+        progressText.textContent = `Soru ${index + 1} / ${TOTAL_Q}`;
+        questionText.textContent = question.label;
+        answerInput.value = "";
+        answerInput.disabled = false; submitBtn.disabled = false;
+        inputError.style.display = "none"; feedbackArea.innerHTML = "";
+        updateTopTime(); startTimer();
+        setTimeout(focusInput, 40);
       }
 
-    }
-
-
-    function keyboardOpened() {
-
-      document.body.classList.add(
-        "keyboard-open"
-      );
-
-
-      setTimeout(() => {
-
-        keepInputVisible();
-
-      }, 80);
-
-
-      setTimeout(() => {
-
-        keepInputVisible();
-
-      }, 300);
-
-    }
-
-
-    function keyboardClosed() {
-
-      document.body.classList.remove(
-        "keyboard-open"
-      );
-
-    }
-
-
-    /* =====================================================
-       SORUYU GÖSTER
-       ===================================================== */
-
-    function renderQuestion() {
-
-      answered = false;
-
-
-      const question =
-        questions[index];
-
-
-      progressText.textContent =
-        `Soru ${index + 1} / ${TOTAL_Q}`;
-
-
-      questionText.textContent =
-        question.label;
-
-
-      answerInput.value = "";
-
-      answerInput.disabled =
-        false;
-
-      submitBtn.disabled =
-        false;
-
-
-      inputError.style.display =
-        "none";
-
-
-      feedbackArea.innerHTML =
-        "";
-
-
-      updateTopTime();
-
-      startTimer();
-
-
-      setTimeout(
-        focusInput,
-        40
-      );
-
-    }
-
-
-    /* =====================================================
-       CEVAP KONTROL
-       ===================================================== */
-
-    function submitAnswer() {
-
-      if (answered)
-        return;
-
-
-      const raw =
-        answerInput.value
-          .trim()
-          .replace(/−/g, "-");
-
-
-      if (!/^-?\d+$/.test(raw)) {
-
-        inputError.style.display =
-          "block";
-
-        focusInput();
-
-        return;
-
-      }
-
-
-      inputError.style.display =
-        "none";
-
-
-      answered = true;
-
-
-      const elapsed =
-        stopTimer();
-
-
-      times.push(
-        elapsed
-      );
-
-
-      const question =
-        questions[index];
-
-
-      const userAnswer =
-        Number(raw);
-
-
-      const isCorrect =
-        userAnswer === question.answer;
-
-
-      corrects.push(
-        isCorrect
-      );
-
-
-      answerInput.disabled =
-        true;
-
-      submitBtn.disabled =
-        true;
-
-
-      updateTopTime();
-
-
-      if (isCorrect) {
-
-        feedbackArea.innerHTML =
-          `<span class="correct">
-            ✓ doğru — ${formatTime(elapsed)} sn
-          </span>`;
-
-      }
-
-      else {
-
-        feedbackArea.innerHTML =
-          `<span class="wrong">
-            ✕ yanlış, doğrusu ${signed(question.answer)}
-            — ${formatTime(elapsed)} sn
-            <span style="opacity:.65;">
-              (+15 sn)
-            </span>
-          </span>`;
-
-      }
-
-
-      setTimeout(() => {
-
-        index++;
-
-
-        if (
-          index < questions.length
-        ) {
-
-          renderQuestion();
-
+      function submitAnswer() {
+        if (answered) return;
+        const raw = answerInput.value.trim().replace(/−/g, "-");
+        if (!/^-?\d+$/.test(raw)) { inputError.style.display = "block"; focusInput(); return; }
+        inputError.style.display = "none";
+        answered = true;
+        const elapsed = stopTimer();
+        times.push(elapsed);
+        const question = questions[index];
+        const userAnswer = Number(raw);
+        const isCorrect = userAnswer === question.answer;
+        corrects.push(isCorrect);
+        answerInput.disabled = true; submitBtn.disabled = true;
+        updateTopTime();
+
+        if (isCorrect) {
+          feedbackArea.innerHTML = `<span class="correct">✓ doğru — ${formatTime(elapsed)} sn</span>`;
+        } else {
+          feedbackArea.innerHTML = `<span class="wrong">✕ yanlış, doğrusu ${signed(question.answer)} — ${formatTime(elapsed)} sn <span style="opacity:.65;">(+15 sn)</span></span>`;
         }
 
-        else {
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) renderQuestion(); else showSummary();
+        }, 900);
+      }
 
-          showSummary();
+      function getRecord() {
+        try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; }
+      }
+      function saveRecord(value) {
+        try { localStorage.setItem(RECORD_KEY, value.toString()); } catch {}
+      }
 
+      function showSummary() {
+        questionArea.style.display = "none"; document.querySelector("#view-tamSayilar .timer-area").style.display = "none";
+        inputRow.style.display = "none"; feedbackArea.style.display = "none";
+        
+        const real = realTotal(), wrong = wrongTotal(), penalty = penaltyTotal(), adjusted = adjustedTotal();
+        const correct = corrects.filter(Boolean).length, average = real / TOTAL_Q;
+        const targetReached = adjusted <= TARGET_TOTAL;
+        const previousRecord = getRecord();
+        const isNewRecord = previousRecord === null || adjusted < previousRecord;
+        if (isNewRecord) saveRecord(adjusted);
+        const record = isNewRecord ? adjusted : previousRecord;
+
+        let rows = "";
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
+          rows += `<tr><td class="question-expression">${questions[i].label}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
         }
 
-      }, 900);
-
-    }
-
-
-    /* =====================================================
-       REKOR
-       ===================================================== */
-
-    function getRecord() {
-
-      try {
-
-        const value =
-          localStorage.getItem(
-            RECORD_KEY
-          );
-
-
-        if (value === null)
-          return null;
-
-
-        const number =
-          Number(value);
-
-
-        return Number.isFinite(number)
-          ? number
-          : null;
-
-      }
-
-      catch {
-
-        return null;
-
-      }
-
-    }
-
-
-    function saveRecord(value) {
-
-      try {
-
-        localStorage.setItem(
-          RECORD_KEY,
-          value.toString()
-        );
-
-      }
-
-      catch {
-
-        /* Rekor tutulamasa da
-           quiz çalışmaya devam eder. */
-
-      }
-
-    }
-
-
-    /* =====================================================
-       SONUÇ EKRANI
-       ===================================================== */
-
-    function showSummary() {
-
-      questionArea.style.display =
-        "none";
-
-      document.querySelector(
-        ".timer-area"
-      ).style.display =
-        "none";
-
-      inputRow.style.display =
-        "none";
-
-      feedbackArea.style.display =
-        "none";
-
-
-      const real =
-        realTotal();
-
-
-      const wrong =
-        wrongTotal();
-
-
-      const penalty =
-        penaltyTotal();
-
-
-      const adjusted =
-        adjustedTotal();
-
-
-      const correct =
-        corrects.filter(Boolean).length;
-
-
-      const average =
-        real / TOTAL_Q;
-
-
-      const targetReached =
-        adjusted <= TARGET_TOTAL;
-
-
-      const previousRecord =
-        getRecord();
-
-
-      const isNewRecord =
-        previousRecord === null ||
-        adjusted < previousRecord;
-
-
-      if (isNewRecord) {
-
-        saveRecord(adjusted);
-
-      }
-
-
-      const record =
-        isNewRecord
-          ? adjusted
-          : previousRecord;
-
-
-      /* SORU TABLOSU */
-
-      let rows = "";
-
-
-      for (
-        let i = 0;
-        i < TOTAL_Q;
-        i++
-      ) {
-
-        const status =
-          corrects[i]
-            ? `<span class="correct">✓</span>`
-            : `<span class="wrong">×</span>`;
-
-
-        rows += `
-          <tr>
-
-            <td class="question-expression">
-              ${questions[i].label}
-            </td>
-
-            <td class="status">
-              ${status}
-            </td>
-
-            <td class="question-time">
-              ${formatTime(times[i])} sn
-            </td>
-
-          </tr>
-        `;
-
-      }
-
-
-      summaryArea.style.display =
-        "block";
-
-
-      summaryArea.innerHTML = `
-
-        <div class="result-main">
-
-          <p class="result-title">
-            cezalı toplam süre
-          </p>
-
-          <p class="result-score">
-            ${formatTime(adjusted)}
-            <small>sn</small>
-          </p>
-
-
-          <div class="result-grid">
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Doğru
-              </span>
-
-              <span class="result-value">
-                ${correct} / ${TOTAL_Q}
-              </span>
-
+        summaryArea.style.display = "block";
+        summaryArea.innerHTML = `
+          <div class="result-main">
+            <p class="result-title">cezalı toplam süre</p>
+            <p class="result-score">${formatTime(adjusted)} <small>sn</small></p>
+            <div class="result-grid">
+              <div class="result-item"><span class="result-label">Doğru</span><span class="result-value">${correct} / ${TOTAL_Q}</span></div>
+              <div class="result-item"><span class="result-label">Yanlış</span><span class="result-value">${wrong}</span></div>
+              <div class="result-item"><span class="result-label">Gerçek süre</span><span class="result-value">${formatTime(real)} sn</span></div>
+              <div class="result-item"><span class="result-label">Yanlış cezası</span><span class="result-value">+${penalty} sn</span></div>
+              <div class="result-item"><span class="result-label">Ortalama</span><span class="result-value">${formatTime(average)} sn</span></div>
+              <div class="result-item"><span class="result-label">Hedef</span><span class="result-value" style="color:${targetReached ? "#59c984" : "#a7a7ad"};">${targetReached ? TARGET_TOTAL + " sn ✓" : TARGET_TOTAL + " sn"}</span></div>
             </div>
-
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Yanlış
-              </span>
-
-              <span class="result-value">
-                ${wrong}
-              </span>
-
-            </div>
-
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Gerçek süre
-              </span>
-
-              <span class="result-value">
-                ${formatTime(real)} sn
-              </span>
-
-            </div>
-
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Yanlış cezası
-              </span>
-
-              <span class="result-value">
-                +${penalty} sn
-              </span>
-
-            </div>
-
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Ortalama
-              </span>
-
-              <span class="result-value">
-                ${formatTime(average)} sn
-              </span>
-
-            </div>
-
-
-            <div class="result-item">
-
-              <span class="result-label">
-                Hedef
-              </span>
-
-              <span
-                class="result-value"
-                style="
-                  color:
-                  ${targetReached
-                    ? "#59c984"
-                    : "#a7a7ad"};
-                "
-              >
-                ${targetReached
-                  ? "120 sn ✓"
-                  : "120 sn"}
-              </span>
-
-            </div>
-
           </div>
-
-        </div>
-
-
-        <div class="record-box">
-
-          <span class="record-label">
-            🏆 Rekor
-          </span>
-
-          <span class="record-value">
-            ${formatTime(record)} sn
-          </span>
-
-        </div>
-
-
-        ${
-          isNewRecord
-            ? `
-              <div class="new-record">
-                Yeni rekor.
-              </div>
-            `
-            : ""
-        }
-
-
-        <div class="target-message">
-
-          20 soru için hedef
-          <strong style="color:#bdbdc2;">
-            120 saniye
-          </strong>.
-
-          <br>
-
-          Soru başına hedef
-          <strong style="color:#bdbdc2;">
-            6.0 saniye
-          </strong>.
-
-          <br>
-
-          Her yanlış cevap
-          <strong style="color:#bdbdc2;">
-            +15 saniye
-          </strong>
-          ceza.
-
-        </div>
-
-
-        <table class="question-table">
-
-          ${rows}
-
-        </table>
-
-
-        <button
-          id="restartBtn"
-          type="button"
-        >
-          ↻ &nbsp; Yeni set
-        </button>
-      `;
-
-
-      document
-        .getElementById("restartBtn")
-        .addEventListener(
-          "click",
-          restart
-        );
-
-    }
-
-
-    /* =====================================================
-       RESET / YENİ SET
-       ===================================================== */
-
-    function restart() {
-
-      if (timerHandle) {
-
-        clearInterval(
-          timerHandle
-        );
-
-        timerHandle = null;
-
+          <div class="record-box"><span class="record-label">🏆 Rekor</span><span class="record-value">${formatTime(record)} sn</span></div>
+          ${isNewRecord ? `<div class="new-record">Yeni rekor.</div>` : ""}
+          <div class="target-message">${TOTAL_Q} soru için hedef <strong style="color:#bdbdc2;">${TARGET_TOTAL} saniye</strong>.<br>Soru başına hedef <strong style="color:#bdbdc2;">${TARGET_PER_Q.toFixed(1)} saniye</strong>.<br>Her yanlış cevap <strong style="color:#bdbdc2;">+${WRONG_PENALTY} saniye</strong> ceza.</div>
+          <table class="question-table">${rows}</table>
+          <button class="restartBtn" id="ts_restartBtn">↻ &nbsp; Yeni set</button>
+        `;
+        document.getElementById("ts_restartBtn").addEventListener("click", restart);
       }
 
+      function restart() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        questions = generateQuestions(); index = 0; times = []; corrects = [];
+        summaryArea.style.display = "none"; summaryArea.innerHTML = "";
+        questionArea.style.display = "flex"; document.querySelector("#view-tamSayilar .timer-area").style.display = "flex";
+        inputRow.style.display = "flex"; feedbackArea.style.display = "block";
+        renderQuestion();
+      }
 
-      document.body.classList.remove(
-        "keyboard-open"
-      );
+      submitBtn.addEventListener("click", submitAnswer);
+      answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
+      answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
 
-
-      questions =
-        generateQuestions();
-
-
-      index = 0;
-
-      times = [];
-
-      corrects = [];
-
-      answered = false;
-
-
-      summaryArea.style.display =
-        "none";
-
-      summaryArea.innerHTML =
-        "";
-
-
-      questionArea.style.display =
-        "flex";
-
-      document.querySelector(
-        ".timer-area"
-      ).style.display =
-        "flex";
-
-      inputRow.style.display =
-        "flex";
-
-      feedbackArea.style.display =
-        "block";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-
+      questions = generateQuestions();
       renderQuestion();
-
-    }
-
-
-    /* =====================================================
-       RESET BUTONU
-       ===================================================== */
-
-    resetBtn.addEventListener(
-      "click",
-      () => {
-
-        restart();
-
-      }
-    );
+    })();
 
 
     /* =====================================================
-       GÖNDER BUTONU
+       MODÜL 2: HİKAYELİ PROBLEMLER MANTIĞI
        ===================================================== */
+    (() => {
+      const TOTAL_Q = 10; 
+      const TARGET_TOTAL = 180; // Hikayeli için biraz daha yüksek hedef (Soru başı ~18sn)
+      const TARGET_PER_Q = TARGET_TOTAL / TOTAL_Q;
+      const WRONG_PENALTY = 15;
+      const RECORD_KEY = "tyt_story_speed_record_v1";
 
-    submitBtn.addEventListener(
-      "click",
-      submitAnswer
-    );
+      const questionArea = document.getElementById("hp_questionArea");
+      const questionText = document.getElementById("hp_questionText");
+      const timerText = document.getElementById("hp_timerText");
+      const inputRow = document.getElementById("hp_inputRow");
+      const answerInput = document.getElementById("hp_answerInput");
+      const submitBtn = document.getElementById("hp_submitBtn");
+      const inputError = document.getElementById("hp_inputError");
+      const feedbackArea = document.getElementById("hp_feedbackArea");
+      const progressText = document.getElementById("hp_progressText");
+      const totalTimeText = document.getElementById("hp_totalTimeText");
+      const summaryArea = document.getElementById("hp_summaryArea");
 
+      let questions = [];
+      let index = 0;
+      let times = [];
+      let corrects = [];
+      let startTime = 0;
+      let timerHandle = null;
+      let answered = false;
 
-    /* =====================================================
-       ENTER
-       ===================================================== */
+      function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+      function elemanSec(dizi) { return dizi[Math.floor(Math.random() * dizi.length)]; }
 
-    answerInput.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key === "Enter"
-        ) {
-
-          event.preventDefault();
-
-          submitAnswer();
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       INPUT HATASI TEMİZLE
-       ===================================================== */
-
-    answerInput.addEventListener(
-      "input",
-      () => {
-
-        if (
-          answerInput.value.trim()
-        ) {
-
-          inputError.style.display =
-            "none";
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       MOBİL KLAVYE TAKİBİ
-       ===================================================== */
-
-    if (window.visualViewport) {
-
-      let previousHeight =
-        window.visualViewport.height;
-
-
-      window.visualViewport.addEventListener(
-        "resize",
-        () => {
-
-          const currentHeight =
-            window.visualViewport.height;
-
-
-          /*
-           * Viewport ciddi şekilde küçüldüyse
-           * mobil klavye açılmış kabul ediyoruz.
-           */
-
-          if (
-            currentHeight <
-            previousHeight - 80
-          ) {
-
-            keyboardOpened();
-
+      // Hikaye Üretim Motoru
+      const sablonlar = [
+          function(seviye) {
+              let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 10 : 100);
+              let s = randInt(50, 150) * carpan, c1 = randInt(15, s/2) * carpan, c2 = randInt(10, 80) * carpan;
+              let mekan = elemanSec(["manav", "restoran", "fırın", "kırtasiye"]);
+              let urun = elemanSec(["portakal", "tabak", "ekmek", "defter"]);
+              let birim = elemanSec(["kg", "adet", "tane"]);
+              return { label: `Bir ${mekan} sabah ${s} ${birim} ${urun} alıyor. Gün içinde ${c1} ${birim} satılıyor, akşam ${c2} ${birim} daha yeni ürün geliyor. Son durumda kaç ${birim} ${urun} vardır?`, answer: s - c1 + c2 };
+          },
+          function(seviye) {
+              let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 5 : 50);
+              let s = randInt(100, 300) * carpan, c1 = randInt(30, 90) * carpan, c2 = randInt(20, 80) * carpan;
+              let mekan = elemanSec(["şehir meydanında", "konser alanında", "müzede", "otobüs durağında"]);
+              let kitle = elemanSec(["kişi", "yolcu", "ziyaretçi"]);
+              return { label: `Bir ${mekan} sabah ${s} ${kitle} bulunmaktadır. Öğlen ${c1} ${kitle} ayrılmış, daha sonra ${c2} ${kitle} daha giriş yapmıştır. Alanda toplam kaç ${kitle} bulunmaktadır?`, answer: s - c1 + c2 };
+          },
+          function(seviye) {
+              let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 10 : 100);
+              let s = randInt(200, 500) * carpan, c1 = randInt(50, 100) * carpan, c2 = randInt(30, 80) * carpan, c3 = randInt(10, 40) * carpan;
+              return { label: `Bir çiftçi ${s} litre süt sağar. Bunun ${c1} litresini mandıraya verir, ${c2} litresini peynir yapar ve ${c3} litresini evde kullanır. Geriye kaç litre süt kalır?`, answer: s - c1 - c2 - c3 };
+          },
+          function(seviye) {
+              let carpan = seviye <= 3 ? 10 : (seviye <= 7 ? 100 : 1000);
+              let s = randInt(150, 400) * carpan, c1 = randInt(50, 120) * carpan, c2 = randInt(30, 150) * carpan;
+              return { label: `Bir şirket kasasında ${s} ₺ bütçe bulundurmaktadır. ${c1} ₺ ofis gideri ödenir, ardından müşterilerden ${c2} ₺ tahsilat yapılır. Son durumda kasada kaç ₺ bulunur?`, answer: s - c1 + c2 };
+          },
+          function(seviye) {
+              let carpan = seviye <= 3 ? 1 : (seviye <= 7 ? 5 : 20);
+              let s = randInt(60, 150) * carpan, c1 = randInt(15, 40) * carpan, c2 = randInt(10, 30) * carpan;
+              return { label: `Bir terzi ${s} metre kumaş alır. ${c1} metresini bir elbise için, ${c2} metresini ise bir pantolon için kullanır. Kaç metre kumaş kalır?`, answer: s - c1 - c2 };
           }
+      ];
 
-
-          /*
-           * Viewport tekrar büyüdüyse
-           * klavye kapanmıştır.
-           */
-
-          if (
-            currentHeight >
-            previousHeight + 80
-          ) {
-
-            keyboardClosed();
-
-          }
-
-
-          previousHeight =
-            currentHeight;
-
+      function generateQuestions() {
+        const list = [];
+        for (let i = 1; i <= TOTAL_Q; i++) {
+          const sablon = elemanSec(sablonlar);
+          list.push(sablon(i)); // Zorluk 1'den 10'a
         }
-      );
-
-
-      window.visualViewport.addEventListener(
-        "scroll",
-        () => {
-
-          if (
-            document.activeElement ===
-            answerInput
-          ) {
-
-            keepInputVisible();
-
-          }
-
-        }
-      );
-
-    }
-
-
-    /*
-     * Input'a dokunulduğunda da bir kez
-     * kontrol ediyoruz.
-     */
-
-    answerInput.addEventListener(
-      "focus",
-      () => {
-
-        document.body.classList.add(
-          "keyboard-open"
-        );
-
-
-        setTimeout(
-          keepInputVisible,
-          250
-        );
-
-        setTimeout(
-          keepInputVisible,
-          500
-        );
-
+        return list;
       }
-    );
 
+      function formatTime(value) { return value.toFixed(1); }
+      function realTotal() { return times.reduce((sum, value) => sum + value, 0); }
+      function wrongTotal() { return corrects.filter(value => !value).length; }
+      function penaltyTotal() { return wrongTotal() * WRONG_PENALTY; }
+      function adjustedTotal() { return realTotal() + penaltyTotal(); }
 
-    /* =====================================================
-       BAŞLAT
-       ===================================================== */
+      function updateTopTime() {
+        const total = adjustedTotal(), penalty = penaltyTotal();
+        totalTimeText.innerHTML = "toplam " + formatTime(total) + " sn" + (penalty > 0 ? ' <span style="color:#a05b5b;">(+' + penalty + ")</span>" : "");
+      }
 
-    questions =
-      generateQuestions();
+      // Hikayeli sorularda okuma payı olduğu için renk süreleri biraz daha uzun tutulur.
+      function updateTimerColor(seconds) {
+        let r, g, b;
+        if (seconds <= TARGET_PER_Q) {
+          const p = seconds / TARGET_PER_Q;
+          r = Math.round(238 + (214 - 238) * p); g = Math.round(238 + (170 - 238) * p); b = Math.round(239 + (105 - 239) * p);
+        } else if (seconds <= TARGET_PER_Q + 5) {
+          const p = (seconds - TARGET_PER_Q) / 5;
+          r = 214; g = Math.round(170 + (109 - 170) * p); b = Math.round(105 + (109 - 105) * p);
+        } else {
+          const p = Math.min((seconds - (TARGET_PER_Q + 5)) / 8, 1);
+          r = Math.round(214 + (184 - 214) * p); g = Math.round(109 + (81 - 109) * p); b = Math.round(109 + (90 - 109) * p);
+        }
+        timerText.style.color = `rgb(${r}, ${g}, ${b})`;
+      }
 
+      function startTimer() {
+        startTime = Date.now();
+        if (timerHandle) clearInterval(timerHandle);
+        timerText.textContent = "0.0 sn"; updateTimerColor(0);
+        timerHandle = setInterval(() => {
+          const elapsed = (Date.now() - startTime) / 1000;
+          timerText.textContent = formatTime(elapsed) + " sn"; updateTimerColor(elapsed);
+        }, 100);
+      }
 
-    renderQuestion();
+      function stopTimer() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        return (Date.now() - startTime) / 1000;
+      }
 
-  })();
+      function focusInput() { answerInput.focus(); }
+
+      function renderQuestion() {
+        answered = false;
+        const question = questions[index];
+        progressText.textContent = `Soru ${index + 1} / ${TOTAL_Q}`;
+        questionText.textContent = question.label;
+        answerInput.value = ""; answerInput.disabled = false; submitBtn.disabled = false;
+        inputError.style.display = "none"; feedbackArea.innerHTML = "";
+        updateTopTime(); startTimer();
+        setTimeout(focusInput, 40);
+      }
+
+      function submitAnswer() {
+        if (answered) return;
+        const raw = answerInput.value.trim().replace(/−/g, "-");
+        if (!/^-?\d+$/.test(raw)) { inputError.style.display = "block"; focusInput(); return; }
+        inputError.style.display = "none"; answered = true;
+        const elapsed = stopTimer(); times.push(elapsed);
+        const question = questions[index];
+        const userAnswer = Number(raw);
+        const isCorrect = userAnswer === question.answer;
+        corrects.push(isCorrect);
+        answerInput.disabled = true; submitBtn.disabled = true;
+        updateTopTime();
+
+        if (isCorrect) {
+          feedbackArea.innerHTML = `<span class="correct">✓ doğru — ${formatTime(elapsed)} sn</span>`;
+        } else {
+          feedbackArea.innerHTML = `<span class="wrong">✕ yanlış, doğrusu ${question.answer} — ${formatTime(elapsed)} sn <span style="opacity:.65;">(+15 sn)</span></span>`;
+        }
+
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) renderQuestion(); else showSummary();
+        }, 1000); // Metin okunduğu için geçiş biraz daha yavaş (900ms -> 1000ms)
+      }
+
+      function getRecord() { try { const v = localStorage.getItem(RECORD_KEY); return v ? Number(v) : null; } catch { return null; } }
+      function saveRecord(value) { try { localStorage.setItem(RECORD_KEY, value.toString()); } catch {} }
+
+      function showSummary() {
+        questionArea.style.display = "none"; document.querySelector("#view-hikayeli .timer-area").style.display = "none";
+        inputRow.style.display = "none"; feedbackArea.style.display = "none";
+        
+        const real = realTotal(), wrong = wrongTotal(), penalty = penaltyTotal(), adjusted = adjustedTotal();
+        const correct = corrects.filter(Boolean).length, average = real / TOTAL_Q;
+        const targetReached = adjusted <= TARGET_TOTAL;
+        const previousRecord = getRecord();
+        const isNewRecord = previousRecord === null || adjusted < previousRecord;
+        if (isNewRecord) saveRecord(adjusted);
+        const record = isNewRecord ? adjusted : previousRecord;
+
+        let rows = "";
+        for (let i = 0; i < TOTAL_Q; i++) {
+          const status = corrects[i] ? `<span class="correct">✓</span>` : `<span class="wrong">×</span>`;
+          // Hikayeli tablo içi çok uzamasın diye metin kısaltılır
+          let kisaMetin = questions[i].label.substring(0, 45) + "..."; 
+          rows += `<tr><td class="question-expression story-table-text" style="text-align:left;">${kisaMetin}</td><td class="status">${status}</td><td class="question-time">${formatTime(times[i])} sn</td></tr>`;
+        }
+
+        summaryArea.style.display = "block";
+        summaryArea.innerHTML = `
+          <div class="result-main">
+            <p class="result-title">cezalı toplam süre</p>
+            <p class="result-score">${formatTime(adjusted)} <small>sn</small></p>
+            <div class="result-grid">
+              <div class="result-item"><span class="result-label">Doğru</span><span class="result-value">${correct} / ${TOTAL_Q}</span></div>
+              <div class="result-item"><span class="result-label">Yanlış</span><span class="result-value">${wrong}</span></div>
+              <div class="result-item"><span class="result-label">Gerçek süre</span><span class="result-value">${formatTime(real)} sn</span></div>
+              <div class="result-item"><span class="result-label">Yanlış cezası</span><span class="result-value">+${penalty} sn</span></div>
+              <div class="result-item"><span class="result-label">Ortalama</span><span class="result-value">${formatTime(average)} sn</span></div>
+              <div class="result-item"><span class="result-label">Hedef</span><span class="result-value" style="color:${targetReached ? "#59c984" : "#a7a7ad"};">${targetReached ? TARGET_TOTAL + " sn ✓" : TARGET_TOTAL + " sn"}</span></div>
+            </div>
+          </div>
+          <div class="record-box"><span class="record-label">🏆 Rekor</span><span class="record-value">${formatTime(record)} sn</span></div>
+          ${isNewRecord ? `<div class="new-record">Yeni rekor.</div>` : ""}
+          <div class="target-message">${TOTAL_Q} soru için hedef <strong style="color:#bdbdc2;">${TARGET_TOTAL} saniye</strong>.<br>Soru başına hedef <strong style="color:#bdbdc2;">${TARGET_PER_Q.toFixed(1)} saniye</strong>.<br>Her yanlış cevap <strong style="color:#bdbdc2;">+${WRONG_PENALTY} saniye</strong> ceza.</div>
+          <table class="question-table">${rows}</table>
+          <button class="restartBtn" id="hp_restartBtn">↻ &nbsp; Yeni set</button>
+        `;
+        document.getElementById("hp_restartBtn").addEventListener("click", restart);
+      }
+
+      function restart() {
+        if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+        questions = generateQuestions(); index = 0; times = []; corrects = [];
+        summaryArea.style.display = "none"; summaryArea.innerHTML = "";
+        questionArea.style.display = "flex"; document.querySelector("#view-hikayeli .timer-area").style.display = "flex";
+        inputRow.style.display = "flex"; feedbackArea.style.display = "block";
+        renderQuestion();
+      }
+
+      submitBtn.addEventListener("click", submitAnswer);
+      answerInput.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitAnswer(); } });
+      answerInput.addEventListener("input", () => { if (answerInput.value.trim()) inputError.style.display = "none"; });
+
+      questions = generateQuestions();
+      renderQuestion();
+    })();
   </script>
 
 </body>
 </html>
-
