@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TYT Tam Sayılar — Hız Antrenmanı</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #0a0a0b;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          #1a1a1d 0%,
+          #0d0d0f 38%,
+          #0a0a0b 75%
+        );
+      color: #eeeeef;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    /* =====================================================
+       ANA SAYFA
+       ===================================================== */
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+
+      padding: 42px 18px 60px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* =====================================================
+       BAŞLIK
+       ===================================================== */
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+
+      color: #77777f;
+
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+
+      color: #f4f4f5;
+
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -0.7px;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+
+      color: #77777f;
+
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       ANA KART
+       ===================================================== */
+
+    .card {
+      padding: 24px;
+
+      background: rgba(20, 20, 22, 0.94);
+
+      border: 1px solid #29292d;
+      border-radius: 20px;
+
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    /* =====================================================
+       ÜST SATIR
+       ===================================================== */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 18px;
+
+      color: #77777f;
+
+      font-size: 12px;
+    }
+
+    #progressText {
+      color: #a2a2a9;
+      font-weight: 600;
+    }
+
+    #totalTimeText {
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+    }
+
+    /* =====================================================
+       SORU
+       ===================================================== */
+
+    .question-box {
+      min-height: 220px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px 15px;
+
+      background: #111113;
+
+      border: 1px solid #242428;
+      border-radius: 15px;
+    }
+
+    #questionText {
+      color: #f3f3f4;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+      font-size: clamp(32px, 8vw, 48px);
+      font-weight: 600;
+
+      letter-spacing: 1px;
+      line-height: 1.25;
+
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       SÜRE
+       ===================================================== */
+
+    .timer-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin: 20px 0 18px;
+    }
+
+    .timer-label {
+      margin-bottom: 5px;
+
+      color: #68686f;
+
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    #timerText {
+      color: #eeeeef;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      font-size: 26px;
+      font-weight: 600;
+
+      transition: color 0.25s ease;
+    }
+
+    /* =====================================================
+       CEVAP
+       ===================================================== */
+
+    .answer-area {
+      display: flex;
+      gap: 9px;
+
+      align-items: flex-start;
+    }
+
+    .input-wrap {
+      flex: 1;
+    }
+
+    #answerInput {
+      width: 100%;
+      height: 52px;
+
+      padding: 0 15px;
+
+      background: #0d0d0f;
+
+      border: 1px solid #303035;
+      border-radius: 11px;
+
+      outline: none;
+
+      color: #f1f1f2;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      font-size: 20px;
+      font-weight: 600;
+
+      text-align: center;
+
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    #answerInput::placeholder {
+      color: #55555c;
+    }
+
+    #answerInput:focus {
+      border-color: #5b5b63;
+
+      box-shadow:
+        0 0 0 3px rgba(255,255,255,0.045);
+    }
+
+    #submitBtn {
+      height: 52px;
+
+      padding: 0 22px;
+
+      border: 0;
+      border-radius: 11px;
+
+      background: #eeeeef;
+      color: #101012;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.08s ease,
+        background 0.15s ease;
+    }
+
+    #submitBtn:hover {
+      background: #ffffff;
+    }
+
+    #submitBtn:active {
+      transform: scale(0.97);
+    }
+
+    #submitBtn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    #inputError {
+      display: none;
+
+      margin-top: 6px;
+
+      color: #d85f5f;
+
+      font-size: 11px;
+      text-align: center;
+    }
+
+    /* =====================================================
+       GERİ BİLDİRİM
+       ===================================================== */
+
+    #feedbackArea {
+      min-height: 27px;
+
+      margin-top: 13px;
+
+      font-size: 13px;
+      text-align: center;
+    }
+
+    /* =====================================================
+       SONUÇ
+       ===================================================== */
+
+    #summaryArea {
+      margin-top: 20px;
+    }
+
+    .result-main {
+      padding: 22px;
+
+      background: #111113;
+
+      border: 1px solid #29292d;
+      border-radius: 15px;
+
+      text-align: center;
+    }
+
+    .result-title {
+      margin: 0 0 5px;
+
+      color: #77777f;
+
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .result-score {
+      margin: 0;
+
+      color: #f3f3f4;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      font-size: 36px;
+      font-weight: 600;
+    }
+
+    .result-score small {
+      color: #66666e;
+      font-size: 17px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      margin-top: 10px;
+
+      border-top: 1px solid #29292d;
+    }
+
+    .result-item {
+      padding: 14px 8px;
+
+      border-bottom: 1px solid #29292d;
+    }
+
+    .result-item:nth-child(odd) {
+      border-right: 1px solid #29292d;
+    }
+
+    .result-label {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #68686f;
+
+      font-size: 11px;
+    }
+
+    .result-value {
+      color: #dddddf;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .record-box {
+      margin-top: 12px;
+      padding: 13px 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: #151517;
+
+      border: 1px solid #29292d;
+      border-radius: 11px;
+    }
+
+    .record-label {
+      color: #77777f;
+      font-size: 12px;
+    }
+
+    .record-value {
+      color: #d7d7d9;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .new-record {
+      margin-top: 8px;
+
+      color: #63c88a;
+
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .target-message {
+      margin-top: 12px;
+      padding: 14px;
+
+      background: #151517;
+
+      border: 1px solid #29292d;
+      border-radius: 11px;
+
+      color: #77777f;
+
+      font-size: 12px;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+    .question-table {
+      width: 100%;
+
+      margin-top: 15px;
+
+      border-collapse: collapse;
+    }
+
+    .question-table td {
+      padding: 9px 4px;
+
+      border-bottom: 1px solid #242428;
+
+      font-size: 12px;
+    }
+
+    .question-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .question-expression {
+      color: #77777f;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+    }
+
+    .question-time {
+      color: #a7a7ad;
+
+      font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .status {
+      width: 24px;
+      text-align: center;
+    }
+
+    .correct {
+      color: #59c984;
+    }
+
+    .wrong {
+      color: #d85f5f;
+    }
+
+    #restartBtn {
+      width: 100%;
+      height: 50px;
+
+      margin-top: 16px;
+
+      background: #19191c;
+
+      border: 1px solid #303035;
+      border-radius: 11px;
+
+      color: #dddddf;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+    }
+
+    #restartBtn:hover {
+      background: #202024;
+      border-color: #3b3b40;
+    }
+
+    /* =====================================================
+       MOBİL
+       ===================================================== */
+
+    @media (max-width: 600px) {
+
+      .page {
+        padding:
+          24px 10px
+          calc(35px + env(safe-area-inset-bottom));
+      }
+
+      .header {
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .card {
+        padding: 16px;
+
+        border-radius: 17px;
+      }
+
+      .question-box {
+        min-height: 185px;
+      }
+
+      #questionText {
+        font-size: clamp(29px, 9vw, 40px);
+      }
+
+      .timer-area {
+        margin: 17px 0 15px;
+      }
+
+      .answer-area {
+        gap: 7px;
+      }
+
+      #submitBtn {
+        min-width: 88px;
+        padding: 0 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+
+      .page {
+        padding-left: 7px;
+        padding-right: 7px;
+      }
+
+      .card {
+        padding: 13px;
+      }
+
+      .question-box {
+        min-height: 170px;
+      }
+
+      #questionText {
+        font-size: 27px;
+      }
+
+      #submitBtn {
+        min-width: 78px;
+        padding: 0 11px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <section class="app">
+
+      <header class="header">
+
+        <p class="eyebrow">
+          TYT Matematik
+        </p>
+
+        <h1>
+          Tam Sayılar Hız Antrenmanı
+        </h1>
+
+        <p class="subtitle">
+          20 soru · soru başına 6 saniye hedef
+        </p>
+
+      </header>
+
+
+      <div class="card">
+
+        <!-- ÜST BİLGİ -->
+
+        <div class="topbar">
+
+          <span id="progressText">
+            Soru 1 / 20
+          </span>
+
+          <span id="totalTimeText">
+            toplam 0.0 sn
+          </span>
+
+        </div>
+
+
+        <!-- SORU -->
+
+        <div
+          class="question-box"
+          id="questionArea"
+        >
+
+          <div id="questionText"></div>
+
+        </div>
+
+
+        <!-- KRONOMETRE -->
+
+        <div class="timer-area">
+
+          <span class="timer-label">
+            süre
+          </span>
+
+          <span id="timerText">
+            0.0 sn
+          </span>
+
+        </div>
+
+
+        <!-- CEVAP -->
+
+        <div
+          class="answer-area"
+          id="inputRow"
+        >
+
+          <div class="input-wrap">
+
+            <input
+              id="answerInput"
+              type="text"
+              inputmode="numeric"
+              enterkeyhint="done"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder="cevap"
+            >
+
+            <div id="inputError">
+              Önce bir cevap gir
+            </div>
+
+          </div>
+
+
+          <button id="submitBtn">
+            Gönder
+          </button>
+
+        </div>
+
+
+        <!-- GERİ BİLDİRİM -->
+
+        <div id="feedbackArea"></div>
+
+
+        <!-- SONUÇ -->
+
+        <div
+          id="summaryArea"
+          style="display:none;"
+        ></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+  (() => {
+
+    /* =====================================================
+       AYARLAR
+       ===================================================== */
+
+    const TOTAL_Q = 20;
+
+    const TARGET_TOTAL = 120;
+
+    const TARGET_PER_Q =
+      TARGET_TOTAL / TOTAL_Q; // 6 saniye
+
+    const WRONG_PENALTY = 15;
+
+    const RECORD_KEY =
+      "tyt_integer_speed_record_v3";
+
+
+    /* =====================================================
+       ELEMENTLER
+       ===================================================== */
+
+    const questionArea =
+      document.getElementById("questionArea");
+
+    const questionText =
+      document.getElementById("questionText");
+
+    const timerText =
+      document.getElementById("timerText");
+
+    const inputRow =
+      document.getElementById("inputRow");
+
+    const answerInput =
+      document.getElementById("answerInput");
+
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+    const inputError =
+      document.getElementById("inputError");
+
+    const feedbackArea =
+      document.getElementById("feedbackArea");
+
+    const progressText =
+      document.getElementById("progressText");
+
+    const totalTimeText =
+      document.getElementById("totalTimeText");
+
+    const summaryArea =
+      document.getElementById("summaryArea");
+
+
+    /* =====================================================
+       DEĞİŞKENLER
+       ===================================================== */
+
+    let questions = [];
+
+    let index = 0;
+
+    let times = [];
+
+    let corrects = [];
+
+    let startTime = 0;
+
+    let timerHandle = null;
+
+    let answered = false;
+
+
+    /* =====================================================
+       RASTGELE SAYI
+       ===================================================== */
+
+    function randInt(min, max) {
+
+      return Math.floor(
+        Math.random() * (max - min + 1)
+      ) + min;
+
+    }
+
+
+    /* =====================================================
+       SAYIYI GÖSTER
+       ===================================================== */
+
+    function signed(n) {
+
+      return n < 0
+        ? "−" + Math.abs(n)
+        : String(n);
+
+    }
+
+
+    /* =====================================================
+       SORU ÜRETİMİ
+
+       ORİJİNAL KODUNLA AYNI
+       ===================================================== */
+
+    function generateQuestions() {
+
+      const list = [];
+
+      for (
+        let i = 0;
+        i < TOTAL_Q;
+        i++
+      ) {
+
+        const a =
+          randInt(10, 999) *
+          (
+            Math.random() < 0.2
+              ? -1
+              : 1
+          );
+
+
+        const b =
+          randInt(10, 999) *
+          (
+            Math.random() < 0.5
+              ? -1
+              : 1
+          );
+
+
+        const op =
+          Math.random() < 0.5
+            ? "+"
+            : "−";
+
+
+        const answer =
+          op === "+"
+            ? a + b
+            : a - b;
+
+
+        const bDisplay =
+          b < 0
+            ? "(" + signed(b) + ")"
+            : signed(b);
+
+
+        list.push({
+          label:
+            signed(a) +
+            " " +
+            op +
+            " " +
+            bDisplay +
+            " =",
+
+          answer
+        });
+
+      }
+
+
+      /* Karıştır */
+
+      for (
+        let i = list.length - 1;
+        i > 0;
+        i--
+      ) {
+
+        const j =
+          randInt(0, i);
+
+        [
+          list[i],
+          list[j]
+        ] =
+        [
+          list[j],
+          list[i]
+        ];
+
+      }
+
+
+      return list;
+
+    }
+
+
+    /* =====================================================
+       FORMAT
+       ===================================================== */
+
+    function formatTime(value) {
+
+      return value.toFixed(1);
+
+    }
+
+
+    /* =====================================================
+       GERÇEK TOPLAM SÜRE
+       ===================================================== */
+
+    function realTotal() {
+
+      return times.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+
+    }
+
+
+    /* =====================================================
+       YANLIŞ SAYISI
+       ===================================================== */
+
+    function wrongTotal() {
+
+      return corrects.filter(
+        value => !value
+      ).length;
+
+    }
+
+
+    /* =====================================================
+       CEZA
+       ===================================================== */
+
+    function penaltyTotal() {
+
+      return (
+        wrongTotal() *
+        WRONG_PENALTY
+      );
+
+    }
+
+
+    /* =====================================================
+       CEZALI TOPLAM
+       ===================================================== */
+
+    function adjustedTotal() {
+
+      return (
+        realTotal() +
+        penaltyTotal()
+      );
+
+    }
+
+
+    /* =====================================================
+       ÜSTTEKİ SÜRE
+       ===================================================== */
+
+    function updateTopTime() {
+
+      const total =
+        adjustedTotal();
+
+      const penalty =
+        penaltyTotal();
+
+
+      totalTimeText.innerHTML =
+        "toplam " +
+        formatTime(total) +
+        " sn" +
+        (
+          penalty > 0
+            ? ' <span style="color:#a05b5b;">(+' +
+              penalty +
+              ")</span>"
+            : ""
+        );
+
+    }
+
+
+    /* =====================================================
+       SÜRE RENGİ
+
+       0 sn → beyaz
+       6 sn → sıcak sarı
+       8 sn → yumuşak kırmızı
+       8+   → daha koyu kırmızı
+
+       Amaç gözü bağırmak değil,
+       beynin "hızlan" sinyalini vermek.
+       ===================================================== */
+
+    function updateTimerColor(seconds) {
+
+      let r;
+      let g;
+      let b;
+
+
+      if (
+        seconds <= TARGET_PER_Q
+      ) {
+
+        const p =
+          seconds / TARGET_PER_Q;
+
+
+        /*
+         * #eeeeef
+         * →
+         * #d6aa69
+         */
+
+        r =
+          Math.round(
+            238 +
+            (214 - 238) * p
+          );
+
+        g =
+          Math.round(
+            238 +
+            (170 - 238) * p
+          );
+
+        b =
+          Math.round(
+            239 +
+            (105 - 239) * p
+          );
+
+      }
+
+      else if (
+        seconds <= 8
+      ) {
+
+        const p =
+          (seconds - 6) / 2;
+
+
+        /*
+         * #d6aa69
+         * →
+         * #d66d6d
+         */
+
+        r = 214;
+
+        g =
+          Math.round(
+            170 +
+            (109 - 170) * p
+          );
+
+        b =
+          Math.round(
+            105 +
+            (109 - 105) * p
+          );
+
+      }
+
+      else {
+
+        const p =
+          Math.min(
+            (seconds - 8) / 8,
+            1
+          );
+
+
+        /*
+         * #d66d6d
+         * →
+         * #b8515a
+         */
+
+        r =
+          Math.round(
+            214 +
+            (184 - 214) * p
+          );
+
+        g =
+          Math.round(
+            109 +
+            (81 - 109) * p
+          );
+
+        b =
+          Math.round(
+            109 +
+            (90 - 109) * p
+          );
+
+      }
+
+
+      timerText.style.color =
+        `rgb(${r}, ${g}, ${b})`;
+
+    }
+
+
+    /* =====================================================
+       TIMER BAŞLAT
+       ===================================================== */
+
+    function startTimer() {
+
+      startTime =
+        Date.now();
+
+
+      if (timerHandle) {
+
+        clearInterval(timerHandle);
+
+      }
+
+
+      timerText.textContent =
+        "0.0 sn";
+
+
+      updateTimerColor(0);
+
+
+      timerHandle =
+        setInterval(() => {
+
+          const elapsed =
+            (
+              Date.now() -
+              startTime
+            ) / 1000;
+
+
+          timerText.textContent =
+            formatTime(elapsed) +
+            " sn";
+
+
+          updateTimerColor(
+            elapsed
+          );
+
+        }, 100);
+
+    }
+
+
+    /* =====================================================
+       TIMER DURDUR
+       ===================================================== */
+
+    function stopTimer() {
+
+      if (timerHandle) {
+
+        clearInterval(
+          timerHandle
+        );
+
+        timerHandle = null;
+
+      }
+
+
+      return (
+        Date.now() -
+        startTime
+      ) / 1000;
+
+    }
+
+
+    /* =====================================================
+       INPUT FOCUS
+       ===================================================== */
+
+    function focusInput() {
+
+      answerInput.focus();
+
+    }
+
+
+    /* =====================================================
+       SORUYU GÖSTER
+       ===================================================== */
+
+    function renderQuestion() {
+
+      answered = false;
+
+
+      const question =
+        questions[index];
+
+
+      progressText.textContent =
+        `Soru ${index + 1} / ${TOTAL_Q}`;
+
+
+      questionText.textContent =
+        question.label;
+
+
+      answerInput.value = "";
+
+      answerInput.disabled =
+        false;
+
+      submitBtn.disabled =
+        false;
+
+
+      inputError.style.display =
+        "none";
+
+
+      feedbackArea.innerHTML =
+        "";
+
+
+      updateTopTime();
+
+      startTimer();
+
+
+      setTimeout(
+        focusInput,
+        40
+      );
+
+    }
+
+
+    /* =====================================================
+       CEVAP KONTROL
+       ===================================================== */
+
+    function submitAnswer() {
+
+      if (answered)
+        return;
+
+
+      const raw =
+        answerInput.value
+          .trim()
+          .replace(/−/g, "-");
+
+
+      if (!/^-?\d+$/.test(raw)) {
+
+        inputError.style.display =
+          "block";
+
+        focusInput();
+
+        return;
+
+      }
+
+
+      inputError.style.display =
+        "none";
+
+
+      answered = true;
+
+
+      const elapsed =
+        stopTimer();
+
+
+      times.push(
+        elapsed
+      );
+
+
+      const question =
+        questions[index];
+
+
+      const userAnswer =
+        Number(raw);
+
+
+      const isCorrect =
+        userAnswer === question.answer;
+
+
+      corrects.push(
+        isCorrect
+      );
+
+
+      answerInput.disabled =
+        true;
+
+      submitBtn.disabled =
+        true;
+
+
+      updateTopTime();
+
+
+      if (isCorrect) {
+
+        feedbackArea.innerHTML =
+          `<span class="correct">
+            ✓ doğru — ${formatTime(elapsed)} sn
+          </span>`;
+
+      }
+
+      else {
+
+        feedbackArea.innerHTML =
+          `<span class="wrong">
+            ✕ yanlış, doğrusu ${signed(question.answer)}
+            — ${formatTime(elapsed)} sn
+            <span style="opacity:.65;">
+              (+15 sn)
+            </span>
+          </span>`;
+
+      }
+
+
+      setTimeout(() => {
+
+        index++;
+
+
+        if (
+          index < questions.length
+        ) {
+
+          renderQuestion();
+
+        }
+
+        else {
+
+          showSummary();
+
+        }
+
+      }, 900);
+
+    }
+
+
+    /* =====================================================
+       REKOR
+       ===================================================== */
+
+    function getRecord() {
+
+      try {
+
+        const value =
+          localStorage.getItem(
+            RECORD_KEY
+          );
+
+
+        if (value === null)
+          return null;
+
+
+        const number =
+          Number(value);
+
+
+        return Number.isFinite(number)
+          ? number
+          : null;
+
+      }
+
+      catch {
+
+        return null;
+
+      }
+
+    }
+
+
+    function saveRecord(value) {
+
+      try {
+
+        localStorage.setItem(
+          RECORD_KEY,
+          value.toString()
+        );
+
+      }
+
+      catch {
+
+        /* Rekor tutulamasa da
+           quiz çalışmaya devam eder. */
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SONUÇ EKRANI
+       ===================================================== */
+
+    function showSummary() {
+
+      questionArea.style.display =
+        "none";
+
+      document.querySelector(
+        ".timer-area"
+      ).style.display =
+        "none";
+
+      inputRow.style.display =
+        "none";
+
+      feedbackArea.style.display =
+        "none";
+
+
+      const real =
+        realTotal();
+
+
+      const wrong =
+        wrongTotal();
+
+
+      const penalty =
+        penaltyTotal();
+
+
+      const adjusted =
+        adjustedTotal();
+
+
+      const correct =
+        corrects.filter(Boolean).length;
+
+
+      const average =
+        real / TOTAL_Q;
+
+
+      const targetReached =
+        adjusted <= TARGET_TOTAL;
+
+
+      const previousRecord =
+        getRecord();
+
+
+      const isNewRecord =
+        previousRecord === null ||
+        adjusted < previousRecord;
+
+
+      if (isNewRecord) {
+
+        saveRecord(adjusted);
+
+      }
+
+
+      const record =
+        isNewRecord
+          ? adjusted
+          : previousRecord;
+
+
+      /* ---------------------------------------------
+         SORU TABLOSU
+         --------------------------------------------- */
+
+      let rows = "";
+
+
+      for (
+        let i = 0;
+        i < TOTAL_Q;
+        i++
+      ) {
+
+        const status =
+          corrects[i]
+            ? `<span class="correct">✓</span>`
+            : `<span class="wrong">×</span>`;
+
+
+        rows += `
+          <tr>
+
+            <td class="question-expression">
+              ${questions[i].label}
+            </td>
+
+            <td class="status">
+              ${status}
+            </td>
+
+            <td class="question-time">
+              ${formatTime(times[i])} sn
+            </td>
+
+          </tr>
+        `;
+
+      }
+
+
+      summaryArea.style.display =
+        "block";
+
+
+      summaryArea.innerHTML = `
+
+        <div class="result-main">
+
+          <p class="result-title">
+            cezalı toplam süre
+          </p>
+
+          <p class="result-score">
+            ${formatTime(adjusted)}
+            <small>sn</small>
+          </p>
+
+
+          <div class="result-grid">
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Doğru
+              </span>
+
+              <span class="result-value">
+                ${correct} / ${TOTAL_Q}
+              </span>
+
+            </div>
+
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Yanlış
+              </span>
+
+              <span class="result-value">
+                ${wrong}
+              </span>
+
+            </div>
+
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Gerçek süre
+              </span>
+
+              <span class="result-value">
+                ${formatTime(real)} sn
+              </span>
+
+            </div>
+
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Yanlış cezası
+              </span>
+
+              <span class="result-value">
+                +${penalty} sn
+              </span>
+
+            </div>
+
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Ortalama
+              </span>
+
+              <span class="result-value">
+                ${formatTime(average)} sn
+              </span>
+
+            </div>
+
+
+            <div class="result-item">
+
+              <span class="result-label">
+                Hedef
+              </span>
+
+              <span
+                class="result-value"
+                style="
+                  color:
+                  ${targetReached
+                    ? "#59c984"
+                    : "#a7a7ad"};
+                "
+              >
+                ${targetReached
+                  ? "120 sn ✓"
+                  : "120 sn"}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="record-box">
+
+          <span class="record-label">
+            🏆 Rekor
+          </span>
+
+          <span class="record-value">
+            ${formatTime(record)} sn
+          </span>
+
+        </div>
+
+
+        ${
+          isNewRecord
+            ? `
+              <div class="new-record">
+                Yeni rekor.
+              </div>
+            `
+            : ""
+        }
+
+
+        <div class="target-message">
+
+          20 soru için hedef
+          <strong style="color:#bdbdc2;">
+            120 saniye
+          </strong>.
+
+          <br>
+
+          Soru başına hedef
+          <strong style="color:#bdbdc2;">
+            6.0 saniye
+          </strong>.
+
+          <br>
+
+          Her yanlış cevap
+          <strong style="color:#bdbdc2;">
+            +15 saniye
+          </strong>
+          ceza.
+
+        </div>
+
+
+        <table class="question-table">
+
+          ${rows}
+
+        </table>
+
+
+        <button id="restartBtn">
+          ↻ &nbsp; Yeni set
+        </button>
+      `;
+
+
+      document
+        .getElementById("restartBtn")
+        .addEventListener(
+          "click",
+          restart
+        );
+
+    }
+
+
+    /* =====================================================
+       RESET / YENİ SET
+       ===================================================== */
+
+    function restart() {
+
+      if (timerHandle) {
+
+        clearInterval(
+          timerHandle
+        );
+
+        timerHandle = null;
+
+      }
+
+
+      questions =
+        generateQuestions();
+
+
+      index = 0;
+
+      times = [];
+
+      corrects = [];
+
+
+      summaryArea.style.display =
+        "none";
+
+      summaryArea.innerHTML =
+        "";
+
+
+      questionArea.style.display =
+        "flex";
+
+      document.querySelector(
+        ".timer-area"
+      ).style.display =
+        "flex";
+
+      inputRow.style.display =
+        "flex";
+
+      feedbackArea.style.display =
+        "block";
+
+
+      renderQuestion();
+
+    }
+
+
+    /* =====================================================
+       BUTON
+       ===================================================== */
+
+    submitBtn.addEventListener(
+      "click",
+      submitAnswer
+    );
+
+
+    /* =====================================================
+       ENTER
+       ===================================================== */
+
+    answerInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          event.preventDefault();
+
+          submitAnswer();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       INPUT HATASI TEMİZLE
+       ===================================================== */
+
+    answerInput.addEventListener(
+      "input",
+      () => {
+
+        if (
+          answerInput.value.trim()
+        ) {
+
+          inputError.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       BAŞLAT
+       ===================================================== */
+
+    questions =
+      generateQuestions();
+
+
+    renderQuestion();
+
+  })();
+  </script>
+
+</body>
+</html>
